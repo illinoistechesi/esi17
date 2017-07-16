@@ -6,15 +6,15 @@ import java.util.*;
  * KannanShip
  * @author Vinesh Kannan
  */
-public class PursuerShip extends Ship {
+public class PursuerShip extends EvilFleetShip {
     
     public PursuerShip() {
         this.initializeName("Pursuer Ship");
         this.initializeOwner("The Evil Fleet");
-        this.initializeHull(2);
-        this.initializeFirepower(2);
-        this.initializeSpeed(3);
-        this.initializeRange(3);
+        this.initializeHull(3);
+        this.initializeFirepower(3);
+        this.initializeSpeed(2);
+        this.initializeRange(2);
     }
     
     /*
@@ -24,25 +24,15 @@ public class PursuerShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        Coord loc = this.getSelfCoord(arena);
-        PursuerShip self = this;
         List<Ship> ships = arena.getNearbyEnemies(this);
         int movesUsed = 0;
         while (ships.size() == 0 && movesUsed < this.getSpeed()) {
-            arena.move(this, Direction.EAST);
+            arena.move(this, this.getNextDirection(arena));
             ships = arena.getNearbyEnemies(this);
             movesUsed++;
         }
         if (ships.size() > 0)  {
-            Collections.sort(ships, new Comparator<Ship>() {
-                @Override
-                public int compare(Ship s1, Ship s2) {
-                    double d1 = self.getDistance(arena, self, s1);
-                    double d2 = self.getDistance(arena, self, s2);
-                    double diff = d2 - d1;
-                    return (int) diff;
-                }
-            });
+            ships = EvilFleet.sortShipsByDistanceFrom(this, ships, arena);
             Ship target = ships.get(0);
             Coord coord = this.getShipCoord(arena, target);
             for (int f = 0; f < this.getFirepower(); f++) {
@@ -51,19 +41,24 @@ public class PursuerShip extends Ship {
         }
     }
     
-    public double getDistance(Arena arena, Ship s1, Ship s2) {
-        Coord c1 = this.getShipCoord(arena, s1);
-        Coord c2 = this.getShipCoord(arena, s2);
-        if (c1 != null && c2 != null) {
-            int x1 = c1.getX();
-            int y1 = c1.getY();
-            int x2 = c2.getX();
-            int y2 = c2.getY();
-            double xDiff = (double) (x2 - x1);
-            double yDiff = (double) (y2 - y1);
-            return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+    protected Direction getNextDirection(Arena arena) {
+        boolean preferX = arena.getXSize() >= arena.getYSize();
+        Coord loc = this.getSelfCoord(arena);
+        boolean westEdge = loc.getX() <= this.getRange();
+        boolean eastEdge = arena.getXSize() - loc.getX() <= this.getRange();
+        boolean northEdge = loc.getY() <= this.getRange();
+        boolean southEdge = arena.getYSize() - loc.getY() <= this.getRange();
+        boolean nearEdge = westEdge || eastEdge || northEdge || southEdge;
+        if (nearEdge) {
+            switch (this.getQuadrant(arena)) {
+                case 1: return preferX ? Direction.WEST : Direction.SOUTH;
+                case 2: return preferX ? Direction.EAST : Direction.SOUTH;
+                case 3: return preferX ? Direction.EAST : Direction.NORTH;
+                case 4: return preferX ? Direction.WEST : Direction.NORTH;
+                default: return preferX ? Direction.EAST : Direction.SOUTH;
+            }
         } else {
-            return Double.POSITIVE_INFINITY;
+            return preferX ? Direction.WEST : Direction.NORTH;
         }
     }
     
