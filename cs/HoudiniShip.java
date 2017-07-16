@@ -6,7 +6,9 @@ import java.util.List;
  * KannanShip
  * @author Vinesh Kannan
  */
-public class HoudiniShip extends Ship {
+public class HoudiniShip extends EvilFleetShip {
+    
+    private int lastHealth;
     
     public HoudiniShip() {
         this.initializeName("Houdini Ship");
@@ -15,6 +17,7 @@ public class HoudiniShip extends Ship {
         this.initializeFirepower(2);
         this.initializeSpeed(1);
         this.initializeRange(4);
+        this.lastHealth = this.getHealth();
     }
     
     /*
@@ -24,6 +27,14 @@ public class HoudiniShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+        
+        if (this.wasHit()) {
+            List<Ship> ships = arena.getNearbyEnemies(this);
+            
+        } else {
+            
+        }
+        
         Coord location = this.getSelfCoord(arena);
         if (location.getX() != 0) {
             arena.move(this, Direction.WEST);
@@ -34,6 +45,14 @@ public class HoudiniShip extends Ship {
         Ship target = ships.get(0);
         Coord coord = this.getShipCoord(arena, target);
         arena.fire(this, coord.getX(), coord.getY());
+        
+        
+        
+        this.lastHealth = this.getHealth();
+    }
+    
+    private boolean wasHit() {
+        return this.lastHealth != this.getHealth();
     }
     
 }
