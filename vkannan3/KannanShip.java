@@ -24,16 +24,20 @@ public class KannanShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        Coord location = this.getSelfCoord(arena);
+        Coord location = this.getCoord();
         if (location.getX() != 0) {
-            arena.move(this, Direction.WEST);
+            this.move(arena, Direction.WEST);
         } else if (location.getY() != 0) {
-            arena.move(this, Direction.NORTH);
+            this.move(arena, Direction.NORTH);
         }
-        List<Ship> ships = arena.getNearbyEnemies(this);
-        Ship target = ships.get(0);
-        Coord coord = this.getShipCoord(arena, target);
-        arena.fire(this, coord.getX(), coord.getY());
+        List<Ship> ships = this.getNearbyShips(arena);
+        try {
+            Ship target = ships.get(0);
+            Coord coord = this.getShipCoord(arena, target);
+            this.fire(arena, coord.getX(), coord.getY());
+        } catch (Exception e) {
+            //System.out.println("No ships to shoot.");
+        }
     }
     
 }
