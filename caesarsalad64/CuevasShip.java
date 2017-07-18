@@ -57,7 +57,7 @@ public class CuevasShip extends Ship {
         Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
         
         // get a random number and store it in a variable
-        Direction randomNumber = arena.getRandom().nextInt(4)
+        Direction randomNumber = arena.getRandom().nextInt(4); //Forgot this semicolon
         
         // get a random movement by using the random number to access one possibleMovement 
         this.move(arena, possibleMovement[randomNumber]);

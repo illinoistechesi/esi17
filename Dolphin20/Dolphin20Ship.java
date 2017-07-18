@@ -41,7 +41,7 @@ public class Dolphin20Ship extends Ship {
            
           this.fire(arena, x, y);
           //this.move(arena, Direc
-        
+        } // Forgot this curly brace
         
         
         
