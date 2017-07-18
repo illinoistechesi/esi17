@@ -24,6 +24,7 @@ public class KannanShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+        //System.out.println("Ships: " + arena.countLiveShips());
         Coord location = this.getCoord();
         if (location.getX() != 0) {
             this.move(arena, Direction.WEST);
