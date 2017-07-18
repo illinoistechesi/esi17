@@ -68,10 +68,19 @@ public class MercadoShip extends Ship {
         // Get the first ship in the list, if there are that many
         if(nearby.size() > 0){
              Ship first = nearby.get(0);
-             Coord enemyCoord = this.getShipCoord(arena, first);
-             int enemyX = enemyCoord.getX();
-             int enemyY = enemyCoord.getY();
-             this.fire(arena, enemyX, enemyY);
+             if (first.getHealth > 0){
+                Coord enemyCoord = this.getShipCoord(arena, first);
+                int enemyX = enemyCoord.getX();
+                int enemyY = enemyCoord.getY();
+                this.fire(arena, enemyX, enemyY);
+             }else{
+                 Ship second = nearby.get(1);
+                 Coord enemyCoord = this.getShipCoord(arena, second);
+                 int enemyX = enemyCoord.getX();
+                 int enemyY = enemyCoord.getY();
+                 this.fire(arena, enemyX, enemyY);
+                 
+             }
         }else{
             System.out.println("No enemies nearby");
         }
