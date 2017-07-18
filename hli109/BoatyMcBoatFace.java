@@ -1,7 +1,6 @@
 package esi17.hli109;
 import battleship.core.*;
 import java.util.List;
-import java.util.Random;
 
 /*
  * Boaty McBoatFace
@@ -9,16 +8,15 @@ import java.util.Random;
  */
 public class BoatyMcBoatFace extends Ship {
     
-    private Random rand = new Random();
     private final Direction[] movement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
     
     public BoatyMcBoatFace() {
         this.initializeName("Boaty McBoatFace");
         this.initializeOwner("Nick");
-        this.initializeHull(2);
-        this.initializeFirepower(4);
+        this.initializeHull(3);
+        this.initializeFirepower(1);
         this.initializeSpeed(1);
-        this.initializeRange(3);
+        this.initializeRange(4);
     }
     
     /*
@@ -28,7 +26,8 @@ public class BoatyMcBoatFace extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        List<Ship> observed = arena.getNearbyEnemies(this);
+        
+        List<Ship> observed = this.getNearbyShips(arena);
         double minHealth = Double.POSITIVE_INFINITY;
         Ship target = null;
         
@@ -40,8 +39,8 @@ public class BoatyMcBoatFace extends Ship {
         }
         
         if (target == null) {
-            arena.move(this, movement[rand.nextInt(4)]);
-            observed = arena.getNearbyEnemies(this);
+            this.move(arena, movement[arena.getRandom().nextInt(4)]);
+            observed = this.getNearbyShips(arena);
             for (int i = 0; i < observed.size(); i++) {
                 if (observed.get(i).getHealth() < minHealth) {
                     target = observed.get(i);
@@ -52,58 +51,57 @@ public class BoatyMcBoatFace extends Ship {
         
         if (target != null) {
             while(this.getRemainingShots() > 0) {
-                // Coord loc = arena.getShipCoord(this, target);
-                Coord loc = arena.getShipCoord(target);
-                arena.fire(this, loc.getX(), loc.getY());
+                Coord loc = this.getShipCoord(arena, target);
+                this.fire(arena, loc.getX(), loc.getY());
             }
         }
+        
+
     }
     
 }
 
+
 /* Accessible Information
+
+Arena
     
-    Arena
-        // commonly used
-        public void move(Ship self, Direction dir)
-        
-        public void fire(Ship self, int x, int y) 
-        
-        public List<Ship> getNearbyEnemies(Ship self) 
+    isInRange(Ship a, Ship b)
+    getXSize()
+    getYSize()
+    countLiveShips()
+    getRandom()
+    getTurn()
+
+Ship
+    doTurn(Arena arena)
+    move(Arena arena, Direction direction)
+    fire(Arena arena, int x, int y)
+    getShipCoord(Arena arena, Ship ship) // for other ships in range
+    getNearbyShips(Arena arena)
     
-        public boolean isInRange(Ship self, Ship target) 
-        
-    Ship
-        public boolean isSunk()
-        
-        public Ship getSunkBy()
-        public Coord getSunkAt()
-        public String getName()
-        public String getOwner()
-        
-        public int getHealth()
-        
-        public int getHull()
-        public int getFirepower()
-        public int getSpeed()
-        public int getRange()
-        
-        // Commonly used
-        Coord getSelfCoord(Arena arena)
-        
-        Coord getShipCoord(Arena arena, Ship target)
-        
-    Direction
-        NORTH, SOUTH, WEST, EAST
+    getCoord() // for the self
+    getRemainingMoves()
+    getRemainingShots()
+    isSunk()
     
-    Coord
-        public int getX()
-        public int getY()
-        public String toString()
-        
-    Grid
-        public boolean isInBounds(int x, int y)
-        public int getXSize()
-        public int getYSize()
-        
+    getHealth()
+    getName()
+    getOwner()
+    getHull()
+    getFirepower()
+    getSpeed()
+    getRange()
+    
+Coord
+    getX()
+    getY()
+    
+Direction
+    NORTH, SOUTH, WEST, EAST
+    
+Grid
+
+Helper
+
 */
