@@ -58,7 +58,6 @@ public class MercadoShip extends Ship {
                 this.move(arena, possibleMovement[randomNumber]);
             }
             */
-        this.move(arena, Direction.EAST);
                 
         // Loop over all nearby ships
         List<Ship> nearby = this.getNearbyShips(arena);
