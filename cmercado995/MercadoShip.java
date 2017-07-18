@@ -11,9 +11,9 @@ public class MercadoShip extends Ship {
     public MercadoShip() {
         this.initializeName("Mercado Ship");
         this.initializeOwner("Christian Mercado");
-        this.initializeHull(2);
+        this.initializeHull(3);
         this.initializeFirepower(3);
-        this.initializeSpeed(1);
+        this.initializeSpeed(0);
         this.initializeRange(4);
     }
     
