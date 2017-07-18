@@ -9,7 +9,7 @@ import java.util.*;
 public class RandomShip extends EvilFleetShip {
     
     public RandomShip() {
-        this.initializeName("Random Ship");
+        this.initializeName("Vinesh Random");
         this.initializeOwner("The Evil Fleet");
         this.initializeHull(2);
         this.initializeFirepower(2);
@@ -26,7 +26,7 @@ public class RandomShip extends EvilFleetShip {
     public void doTurn(Arena arena) {
         this.fireAtRandomShip(arena);
         for (int m = 0; m < this.getFirepower(); m++) {
-            arena.move(this, getRandomDirection(arena));
+            this.move(arena, getRandomDirection(arena));
             this.fireAtRandomShip(arena);
         }
     }
@@ -38,12 +38,12 @@ public class RandomShip extends EvilFleetShip {
     }
     
     public void fireAtRandomShip(Arena arena) {
-        List<Ship> ships = arena.getNearbyEnemies(this);
+        List<Ship> ships = this.getNearbyShips(arena);
         if (ships.size() > 0) {
             int sidx = arena.getRandom().nextInt(ships.size());
             Ship target = ships.get(sidx);
             Coord coord = this.getShipCoord(arena, target);
-            arena.fire(this, coord.getX(), coord.getY());
+            this.fire(arena, coord.getX(), coord.getY());
         }
     }
 }

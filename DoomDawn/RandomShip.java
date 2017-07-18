@@ -10,7 +10,7 @@ import java.util.Random;
 public class RandomShip extends Ship {
     
     public RandomShip() {
-        this.initializeName("Random Ship");
+        this.initializeName("Freddy Random");
         this.initializeOwner("The Random Evil");
         this.initializeHull(1);
         this.initializeFirepower(2);
@@ -33,23 +33,24 @@ public class RandomShip extends Ship {
     //System.out.println("\nShip Random's Current Location Is: ("+shipX+","+shipY+")");
     //Random randomNum = arena.getRandom();
     //int rand1 = randomNum.nextInt(4); 
-    Random ran = new Random();
+    //Random ran = new Random();
+    Random ran = arena.getRandom();
     int rand2 = ran.nextInt(4);
     //System.out.println("The Random Number This Time Is: "+rand2);
     //System.out.println("The Random Number for the correct one This Time Is: "+rand2);
     switch(rand2){
-        case 0: arena.move(this, Direction.NORTH);
+        case 0: this.move(arena, Direction.NORTH);
                 break;
-        case 1: arena.move(this, Direction.SOUTH);
+        case 1: this.move(arena, Direction.SOUTH);
                 break;        
-        case 2: arena.move(this, Direction.EAST);
+        case 2: this.move(arena, Direction.EAST);
                 break;
-        case 3: arena.move(this, Direction.WEST);
+        case 3: this.move(arena, Direction.WEST);
                 break;    
     }
     
     
-    List <Ship> ships1 = arena.getNearbyEnemies(this);
+    List <Ship> ships1 = this.getNearbyShips(arena);
     int size = ships1.size();
     for(int q = 0; q<size; q++){
         Ship target = ships1.get(q);
@@ -58,7 +59,7 @@ public class RandomShip extends Ship {
         int shipY1 =coord1.getY();
         //System.out.println("The nearby ship is: "+target+"\n");
         //System.out.println("The Ship Is Located At: ("+shipX1+","+shipY1+")");
-        arena.fire(this, shipX1, shipY1);
+        this.fire(arena, shipX1, shipY1);
         //System.out.println("The nearby ship: "+target+" Was attacked!!!!");
         
     }
