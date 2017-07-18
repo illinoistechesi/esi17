@@ -24,7 +24,7 @@ public class FastShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        arena.move(this, Direction.WEST);
+        this.move(arena, Direction.WEST);
     }
     
 }
