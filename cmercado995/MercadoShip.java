@@ -24,65 +24,37 @@ public class MercadoShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena){
-        // Fill in your strategy here
-        
-        /************************
-        Nick's code for movement
-        *************************/
-        /*
-        // gets the current location of the ship
-            Coord coord = this.getCoord();
-            int x = coord.getX();
-            int y = coord.getY();
-            
-        if (x > 8) {
-                this.move(arena, Direction.WEST);
-            }
-            else if (x < 2) {
-                this.move(arena, Direction.EAST);
-            }
-            else if (y > 8) {
-                this.move(arena, Direction.NORTH);
-            }
-            else if (y < 2) {
-                this.move(arena, Direction.SOUTH);
-            }
-            else {
-                // make a list of all the location, and store it in a variable
-                Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-                
-                // get a random number and store it in a variable
-                Direction randomNumber = arena.getRandom().nextInt(4)
-                
-                // get a random movement by using the random number to access one possibleMovement 
-                this.move(arena, possibleMovement[randomNumber]);
-            }
-            */
                 
         // Loop over all nearby ships
         List<Ship> nearby = this.getNearbyShips(arena);
         for (Ship ship : nearby) {
                 System.out.println("One nearby ship has " + ship.getHealth() + " HP left.");
-            }
+                int shipsLeft = (arena.countLiveShips() - 1);
+                if((arena.countLiveShips() - 1) != 1){
+                    System.out.println("There are " + shipsLeft + " ships left.");
+                }else{
+                    System.out.println("There is " + shipsLeft + "ship left.");
+                }
+        }
         
+         //Only shoots at ship if its health is greater 
+        //than 0 otherwise moves to the second one in the range
         // Get the first ship in the list, if there are that many
-        if(nearby.size() > 0){
-             Ship first = nearby.get(0);
-             if (first.getHealth > 0){
-                Coord enemyCoord = this.getShipCoord(arena, first);
-                int enemyX = enemyCoord.getX();
-                int enemyY = enemyCoord.getY();
-                this.fire(arena, enemyX, enemyY);
-             }else{
-                 Ship second = nearby.get(1);
-                 Coord enemyCoord = this.getShipCoord(arena, second);
-                 int enemyX = enemyCoord.getX();
-                 int enemyY = enemyCoord.getY();
-                 this.fire(arena, enemyX, enemyY);
-                 
-             }
+        int n = 0;
+        
+        Ship target = nearby.get(n);
+        if (target.getHealth() > 0 && !target.isSunk()){
+            Coord enemyCoord = this.getShipCoord(arena, target);
+            int enemyX = enemyCoord.getX();
+            int enemyY = enemyCoord.getY();
+            this.fire(arena, enemyX, enemyY);
         }else{
-            System.out.println("No enemies nearby");
+            n++;
+            target = nearby.get(n);
+            Coord enemyCoord = this.getShipCoord(arena, target);
+            int enemyX = enemyCoord.getX();
+            int enemyY = enemyCoord.getY();
+            this.fire(arena, enemyX, enemyY);
         }
     }
 }
