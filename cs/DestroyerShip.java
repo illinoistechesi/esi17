@@ -24,7 +24,7 @@ public class DestroyerShip extends EvilFleetShip {
      */
     @Override
     public void doTurn(Arena arena) {
-        List<Ship> ships = arena.getNearbyEnemies(this);
+        List<Ship> ships = this.getNearbyShips(arena);
         Collections.sort(ships, new Comparator<Ship>() {
             @Override
             public int compare(Ship s1, Ship s2) {
@@ -33,15 +33,19 @@ public class DestroyerShip extends EvilFleetShip {
         });
         int shotsUsed = 0;
         int targetIndex = 0;
-        Ship target = ships.get(targetIndex);
-        while (shotsUsed < this.getFirepower()) {
-            if (target.isSunk()) {
-                targetIndex++;
-                target = ships.get(targetIndex);
+        try {
+            Ship target = ships.get(targetIndex);
+            while (shotsUsed < this.getFirepower()) {
+                if (target.isSunk()) {
+                    targetIndex++;
+                    target = ships.get(targetIndex);
+                }
+                Coord coord = this.getShipCoord(arena, target);
+                this.fire(arena, coord.getX(), coord.getY());
+                shotsUsed++;
             }
-            Coord coord = this.getShipCoord(arena, target);
-            arena.fire(this, coord.getX(), coord.getY());
-            shotsUsed++;
+        } catch (Exception e) {
+            // No more ships to shoot at
         }
     }
     

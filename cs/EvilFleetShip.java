@@ -22,7 +22,7 @@ abstract class EvilFleetShip extends Ship {
     }
     
     int getQuadrant(Arena arena) {
-        Coord loc = this.getSelfCoord(arena);
+        Coord loc = this.getCoord();
         int xMid = (int) (((double) arena.getXSize()) / 2.0);
         int yMid = (int) (((double) arena.getYSize()) / 2.0);
         int quadrant = 1;

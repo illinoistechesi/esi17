@@ -33,7 +33,7 @@ public class Dolphin20Ship extends Ship {
         List<Ship> nearby = this.getNearyShips(arena);
         
         if (nearby.size() > 0) {
-           Ship first = nearby.get(0)
+           Ship first = nearby.get(0);
         
            Coord coord =this.getShipCoord(arena, first);
            int x = coord.getX();
