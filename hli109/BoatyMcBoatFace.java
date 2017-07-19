@@ -9,15 +9,49 @@ import java.util.List;
 public class BoatyMcBoatFace extends Ship {
     
     private final Direction[] movement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
+
+    private Coord camp;
+    private boolean phase;
+    private boolean isHit;
+    private int sustainDamage;
     
     public BoatyMcBoatFace() {
         this.initializeName("Boaty McBoatFace");
         this.initializeOwner("Nick");
-        this.initializeHull(3);
-        this.initializeFirepower(1);
-        this.initializeSpeed(1);
-        this.initializeRange(4);
+        this.initializeHull(2);
+        this.initializeFirepower(3);
+        this.initializeSpeed(2);
+        this.initializeRange(3);
+        
+        phase = 0; 
+        isHit = false;
+        sustainDamage = 0;
     }
+    
+    
+    private void movementProtocol(Arena arena, Coord target, boolean options) {
+        List<Ship> start = this.getNearbyShips(arena);
+        double minHealth = Double.POSITIVE_INFINITY;
+        Ship target = null;
+        int x = Math.abs(this.getCoord().x - target.x);
+        int y = Math.abs(this.getCoord().y - target.y);
+        
+        if (start.size() == 0) {
+            if (x > y) {
+                this.move(arena, (target.x > this.getCoord().x)? Direction.EAST : Direction.WEST);
+            } else {
+                this.move(arena, (target.y > this.getCoord().x)? Direction.NORTH : Direction.SOUTH);
+            }
+            if (options) {
+                movementProtocol(arena, target, false);
+            }
+        }
+        if (start.size() > 1) {
+            
+        }
+        
+    }
+    
     
     /*
      * Determines what actions the ship will take on a given turn
@@ -26,34 +60,37 @@ public class BoatyMcBoatFace extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+        if (phase == 0) {
+            Coord map = new Coord(arena.getXSize()-1, arena.getYSize()-1);
+            Coord self = this.getCoord();
+            int x, y;
+            
+            if (self.x <= map.x/2) {
+                x = 1;
+            } else {
+                x = map.x - 2;
+            }
+            if (self.y <= map.y/2) {
+                y = 1;
+            } else {
+                y = map.y - 2;
+            }
+            camp = new Coord(x, y);
+            phase++;
+        }
         
-        List<Ship> observed = this.getNearbyShips(arena);
-        double minHealth = Double.POSITIVE_INFINITY;
-        Ship target = null;
-        
-        for (int i = 0; i < observed.size(); i++) {
-            if (observed.get(i).getHealth() < minHealth) {
-                target = observed.get(i);
-                minHealth = target.getHealth();
+        if (phase == 1) {
+            int x = Math.abs(this.getCoord().x - target.x);
+            int y = Math.abs(this.getCoord().y - target.y);
+            if (x+y == 0) {
+                phase++;
+            } else {
+                movementProtocol(arena, camp);
             }
         }
         
-        if (target == null) {
-            this.move(arena, movement[arena.getRandom().nextInt(4)]);
-            observed = this.getNearbyShips(arena);
-            for (int i = 0; i < observed.size(); i++) {
-                if (observed.get(i).getHealth() < minHealth) {
-                    target = observed.get(i);
-                    minHealth = target.getHealth();
-                }
-            }
-        }
-        
-        if (target != null) {
-            while(this.getRemainingShots() > 0) {
-                Coord loc = this.getShipCoord(arena, target);
-                this.fire(arena, loc.getX(), loc.getY());
-            }
+        if (phase == 2) {
+            
         }
         
 
