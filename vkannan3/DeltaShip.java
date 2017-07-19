@@ -39,7 +39,7 @@ public class DeltaShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        List<Ship> ships = arena.getNearbyEnemies(this);
+        List<Ship> ships = this.getNearbyShips(arena);
         double minStrength = Double.POSITIVE_INFINITY;
         Ship target = null;
         for (Ship ship : ships) {
@@ -52,11 +52,11 @@ public class DeltaShip extends Ship {
         if (target != null) {
             Coord coord = this.getShipCoord(arena, target);
             for (int f = 0; f < this.getFirepower(); f++) {
-                arena.fire(this, coord.getX(), coord.getY());
+                this.fire(arena, coord.getX(), coord.getY());
             }
         }
         for (int m = 0; m < this.getSpeed(); m++) {
-            arena.move(this, Direction.NORTH);
+            this.move(arena, Direction.NORTH);
         }
     }
     

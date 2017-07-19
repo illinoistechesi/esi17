@@ -24,7 +24,20 @@ public class MakeAmericaGreatAgain extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        this.move(arena, Direction.EAST);
+        //this.move(arena, Direction.EAST);
+        int i = arena.getRandom().nextInt(10);
+        if (i > 3) {
+            this.move(arena, Direction.NORTH);
+        }
+        else if (i > 2) {
+            this.move(arena, Direction.WEST);
+        }
+        else if (i < 8) {
+            this.move(arena, Direction.SOUTH);
+        }
+        else if (i > 5) {
+            this.move(arena, Direction.EAST);
+        }
         List<Ship> nearby = this.getNearbyShips(arena);
         if (nearby.size() > 0) {
             Ship first = nearby.get(0);
