@@ -11,10 +11,10 @@ public class KSsinker extends Ship {
     public KSsinker() {
         this.initializeName("K.S. Sinker");
         this.initializeOwner("Abdul Muhammad");
-        this.initializeHull(10);
-        this.initializeFirepower(0);
-        this.initializeSpeed(0);
-        this.initializeRange(0);
+        this.initializeHull(2);
+        this.initializeFirepower(1);
+        this.initializeSpeed(4);
+        this.initializeRange(3);
     }
     
     /*
@@ -23,7 +23,7 @@ public class KSsinker extends Ship {
      * @return void
      */
     @Override
-    public void doTurn(Arena arena) {/*
+    public void doTurn(Arena arena) {
         // Fill in your strategy here
      
        
@@ -65,7 +65,24 @@ public class KSsinker extends Ship {
                     int RAN = ship.getRange();
                     int ATK = ship.getFirepower();
                     
-                    Determine(arena);
+                    // Determine(arena);
+                    int sneak = x - 5;
+                    
+                    
+                    if(x > shipX && RAN > shipX){
+                    for (int i = 0; i < RAN i++){
+                        arena.move(this, Direction.EAST);
+                    }
+                }
+                    
+                
+                if(x == sneak){
+                    arena.move(this, Direction.EAST);
+                    arena.move(this, Direction.EAST);
+                    this.fire(arena, x, y);
+                    arena.move(this, Direction.WEST);
+                    arena.move(this, Direction.WEST);
+                }
                     
                     
                     // this.fire(arena, x, y);
@@ -148,54 +165,54 @@ public class KSsinker extends Ship {
         // }
     }
     
-    public Determine(Arena arena){
+    // public Determine(Arena arena){
         
-        List<Ship> nearby = this.getNearbyShips(arena);
+    //     List<Ship> nearby = this.getNearbyShips(arena);
         
-        for (int i = 0; i < nearby.size(); i++) {
+    //     for (int i = 0; i < nearby.size(); i++) {
             
-            Ship ship = nearby.get(i);
+    //         Ship ship = nearby.get(i);
             
-            String myTeam = this.getTeam();
-            String theirTeam = ship.getTeam();
-            // for (Ship ship : nearby) {
-            // System.out.println("One nearby ship has " + ship.getHealth() + " HP left.");
+    //         String myTeam = this.getTeam();
+    //         String theirTeam = ship.getTeam();
+    //         // for (Ship ship : nearby) {
+    //         // System.out.println("One nearby ship has " + ship.getHealth() + " HP left.");
             
-            if (theirTeam.equals(myTeam)) {
-                //NOTHING
-            }   else {
+    //         if (theirTeam.equals(myTeam)) {
+    //             //NOTHING
+    //         }   else {
                 
-                    Coord coord = ship.getCoord();
-                    int x = coord.getX();
-                    int y = coord.getY();
-                    int HP = ship.getHealth();
-                    int SPD = ship.getSpeed();
-                    int RAN = ship.getRange();
-                    int ATK = ship.getFirepower();
-                    int shipX = shipLocation.getX();
+    //                 Coord coord = ship.getCoord();
+    //                 int x = coord.getX();
+    //                 int y = coord.getY();
+    //                 int HP = ship.getHealth();
+    //                 int SPD = ship.getSpeed();
+    //                 int RAN = ship.getRange();
+    //                 int ATK = ship.getFirepower();
+    //                 int shipX = shipLocation.getX();
 
-                    int sneak = x - 5;
+    //                 int sneak = x - 5;
         
-                if(x > shipX && RAN > shipX){
-                    for (int i = 0; i < RAN i++){
-                        arena.move(this, Direction.EAST);
-                    }
-                }
+    //             if(x > shipX && RAN > shipX){
+    //                 for (int i = 0; i < RAN i++){
+    //                     arena.move(this, Direction.EAST);
+    //                 }
+    //             }
         
-                if(x == sneak){
-                    arena.move(this, Direction.EAST);
-                    arena.move(this, Direction.EAST);
-                    this.fire(arena, x, y);
-                    arena.move(this, Direction.WEST);
-                    arena.move(this, Direction.WEST);
-                }
+    //             if(x == sneak){
+    //                 arena.move(this, Direction.EAST);
+    //                 arena.move(this, Direction.EAST);
+    //                 this.fire(arena, x, y);
+    //                 arena.move(this, Direction.WEST);
+    //                 arena.move(this, Direction.WEST);
+    //             }
                     
-                    // this.fire(arena, x, y);
+    //                 // this.fire(arena, x, y);
                     
+    //         }
+            
+            
+        
             }
-            
-            
-        
-   */ }
     
 }
