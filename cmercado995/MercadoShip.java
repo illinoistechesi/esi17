@@ -15,7 +15,6 @@ public class MercadoShip extends Ship {
         this.initializeFirepower(3);
         this.initializeSpeed(0);
         this.initializeRange(4);
-        this.setTeam("Fairly Strong Ducks");
     }
     
     /*
