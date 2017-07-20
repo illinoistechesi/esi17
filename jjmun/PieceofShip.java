@@ -1,22 +1,23 @@
-package esi17.aquafreeze;
+package esi17.jjmun;
 import battleship.core.*;
 import java.util.List;
 
 /*
- * DestroyerShip
- * aquafreeze
+ * jjmun
+ * @author Your Name
  */
-public class AquafreezeShip extends Ship {
+public class PieceofShip extends Ship {
     
-    public AquafreezeShip() {
-        this.initializeName("AquafreezeShip");
-        this.initializeOwner("aquafreeze");
-        this.initializeHull(3);
+    public PieceofShip() {
+        this.initializeName("PieceofShip");
+        this.initializeOwner("jjmun");
+        this.initializeHull(5);
         this.initializeFirepower(2);
-        this.initializeSpeed(2);
-        this.initializeRange(3);
+        this.initializeSpeed(1);
+        this.initializeRange(2);
     }
     
+
     /*
      * Determines what actions the ship will take on a given turn
      * @param arena (Arena) the battlefield for the match
@@ -24,19 +25,12 @@ public class AquafreezeShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        // Fill in your strategy here
+                this.move(arena, Direction.WEST);
+        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.NORTH);
+        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.SOUTH);
         List<Ship> nearby = this.getNearbyShips(arena);
-        if(nearby.size()==0)
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-    /*
- * Example of how not to shoot your teammates
- */
-// Get all nearby ships
-
 // Loop over all the ships
 for (int i = 0; i < nearby.size(); i++) {
     Ship ship = nearby.get(i);
@@ -55,11 +49,7 @@ for (int i = 0; i < nearby.size(); i++) {
         int y = coord.getY();
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
         this.fire(arena, x, y);
-        System.out.println("Yee-Haw");
     }
 }
+    }
 }
-  
-    
-}
-

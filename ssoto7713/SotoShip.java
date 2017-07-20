@@ -1,19 +1,19 @@
-package esi17.aquafreeze;
+package esi17.ssoto7713;
 import battleship.core.*;
 import java.util.List;
 
 /*
- * DestroyerShip
- * aquafreeze
+ * SotoShip
+ * @author Soto
  */
-public class AquafreezeShip extends Ship {
+public class SotoShip extends Ship {
     
-    public AquafreezeShip() {
-        this.initializeName("AquafreezeShip");
-        this.initializeOwner("aquafreeze");
-        this.initializeHull(3);
+    public SotoShip() {
+        this.initializeName("SotoShip");
+        this.initializeOwner("Soto");
+        this.initializeHull(4);
         this.initializeFirepower(2);
-        this.initializeSpeed(2);
+        this.initializeSpeed(1);
         this.initializeRange(3);
     }
     
@@ -25,18 +25,21 @@ public class AquafreezeShip extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // Fill in your strategy here
+           Coord me = this.getCoord();
+    int a = me.getX();
+    int b = me.getY();
+    
+    
+    if (a < 5) {
+        this.move(arena, Direction.EAST);
+        
+    }
+    else if (a > 5) {
+        this.move(arena, Direction.WEST);
+    }
+    
+        //gets neaby enemies
         List<Ship> nearby = this.getNearbyShips(arena);
-        if(nearby.size()==0)
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-    /*
- * Example of how not to shoot your teammates
- */
-// Get all nearby ships
-
 // Loop over all the ships
 for (int i = 0; i < nearby.size(); i++) {
     Ship ship = nearby.get(i);
@@ -55,11 +58,8 @@ for (int i = 0; i < nearby.size(); i++) {
         int y = coord.getY();
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
         this.fire(arena, x, y);
-        System.out.println("Yee-Haw");
+        this.fire(arena, x, y);
     }
 }
 }
-  
-    
 }
-

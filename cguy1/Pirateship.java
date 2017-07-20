@@ -12,9 +12,9 @@ public class Pirateship extends Ship {
         this.initializeName("Pirateship");
         this.initializeOwner("cguy1");
         this.initializeHull(3);
-        this.initializeFirepower(2);
-        this.initializeSpeed(2);
-        this.initializeRange(3);
+        this.initializeFirepower(3);
+        this.initializeSpeed(0);
+        this.initializeRange(4);
     }
     
     /*
