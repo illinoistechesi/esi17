@@ -6,7 +6,7 @@ import java.util.*;
  * Random Ship
  * @author The Evil Fleet
  */
-public class RandomShip extends EvilFleetShip {
+public class RandomShip extends Ship {
     
     public RandomShip() {
         this.initializeName("Vinesh Random");
