@@ -13,7 +13,7 @@ public class KannanShip extends Ship {
         this.initializeOwner("Vinesh Kannan");
         this.initializeHull(3);
         this.initializeFirepower(2);
-        this.initializeSpeed(1);
+        this.initializeSpeed(2);
         this.initializeRange(4);
     }
     
@@ -24,11 +24,25 @@ public class KannanShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+<<<<<<< HEAD
         System.out.println(" ");
         List<Ship> ships = arena.getAllShips();
         for (Ship ship : ships) {
             Coord coord = this.getShipCoord(arena, ship);
             System.out.println(ship + ": " + coord);
+=======
+        
+        this.move(arena,Direction.WEST);
+        this.move(arena,Direction.NORTH);
+        this.move(arena,Direction.EAST);
+        this.move(arena,Direction.SOUTH);
+        
+        Coord location = this.getSelfCoord(arena);
+        if (location.getX() != 0) {
+            arena.move(this, Direction.WEST);
+        } else if (location.getY() != 0) {
+            arena.move(this, Direction.NORTH);
+>>>>>>> 85ca9214ae4b1ee7ebabd9721c34267fc925a9eb
         }
         this.move(arena, Direction.EAST);
     }
