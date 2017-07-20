@@ -54,16 +54,6 @@ public class CuevasShip extends Ship
     
     for (int i = 0; i < nearby.size(); i++)
     {
-<<<<<<< HEAD
-        this.move(arena, Direction.SOUTH);
-    }
-    else {
-        // make a list of all the location, and store it in a variable
-        Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-        
-        // get a random number and store it in a variable
-        Direction randomNumber = arena.getRandom().nextInt(4); //Forgot this semicolon
-=======
         Ship ship = nearby.get(i);
         // Call the getTeam() method on any ship to get its team name
         String myTeam = this.getTeam();
@@ -82,7 +72,14 @@ public class CuevasShip extends Ship
         Coord coord = ship.getCoord();
         int x = coord.getX();
         int y = coord.getY();
->>>>>>> 4074ec2bb41f06dd13e948ebcbc18a2752149dc2
+        this.move(arena, Direction.SOUTH);
+    }
+    else {
+        // make a list of all the location, and store it in a variable
+        Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
+        
+        // get a random number and store it in a variable
+        Direction randomNumber = arena.getRandom().nextInt(4); //Forgot this semicolon
         
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
         this.fire(arena, x, y);
