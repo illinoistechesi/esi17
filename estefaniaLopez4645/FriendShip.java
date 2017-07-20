@@ -13,8 +13,8 @@ public class FriendShip extends Ship {
         this.initializeOwner("Your Name");
         this.initializeHull(2);
         this.initializeFirepower(3);
-        this.initializeSpeed(4);
-        this.initializeRange(1);
+        this.initializeSpeed(2);
+        this.initializeRange(3);
     }
     
     /*
@@ -24,38 +24,78 @@ public class FriendShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        List<Ship> nearb= this.getNearbyShips(arena);
-       Coord coord = this.getCoord();
-    int x = coord.getX();
-    int y = coord.getY();
-    
-    if (x > 8) {
-        this.move(arena, Direction.WEST);
-    }
-    else if (x < 2) {
-        this.move(arena, Direction.EAST);
-    }
-    else if (y > 8) {
-        this.move(arena, Direction.NORTH);
-    }
-    else if (y < 2) {
-        this.move(arena, Direction.SOUTH);
-    }
-    else {
-        // make a list of all the location, and store it in a variable
-        Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
         
-        // get a random number and store it in a variable
-        int randomNumber = arena.getRandom().nextInt(4);
+       /* Coord my= this.getCoord();
+          int myx = my.getX();
+          
+          if (myx==0){
+            for(int i=0; i<7; i++){
+            this.move(arena, Direction.EAST);
+            }
+          }
+        if (myx==9){
+            for(int i=0; i<7; i++){
+            this.move(arena, Direction.WEST);
+            }
+          }
         
-        // get a random movement by using the random number to access one possibleMovement 
-        this.move(arena, possibleMovement[randomNumber]);
+       */ 
+        
+        
+        List<Ship> alive= arena.getAllShips();
+    for (int i = 0; i < alive.size(); i++) {
+    Ship ship = alive.get(i);
+    // Call the getTeam() method on any ship to get its team name
+    String myTeam = this.getTeam();
+    String theirTeam =ship.getTeam();
+    // To compare Strings, we have to use the special .equals() method
+    // It will return true if the strings are equal and false if they are not
+         if (theirTeam.equals(myTeam)) {
+        // Don't shoot!
+    } else {
+        
+        Coord coord = ship.getCoord();
+        int x = coord.getX();
+        int y = coord.getY();
+         this.fire(arena, x, y);
+       
+        if(!arena.isInRange(this, ship ))
+        {
+          Coord my= this.getCoord();
+          int myx = my.getX();
+          int myy = my.getY();
+          
+          
+          if(myy<y)
+            this.move(arena, Direction.SOUTH);
+          if(myy>y)
+             this.move(arena, Direction.NORTH);
+           if(myx<x)
+           this.move(arena, Direction.EAST);
+          if(myx>x)
+             this.move(arena, Direction.WEST);
+             
+              if(arena.isInRange(this, ship )){
+             
+        // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
+        
+       
+        }
+        }
+        // In the new version of battleship, you can get any ship's coordinate, even if it is out of your range
+        // But, snce we used getNearbyShips(), all ships in this loop are in range
+        
+       
+        
+        
     }
+
+        
     
     // ship using this instruction will fire at location (x: 0, y: 0) each turn
-    this.fire(arena, 7,2 );
-    this.fire(arena, 12,2 );
+    //this.fire(arena, 7,2 );
+   // this.fire(arena, 12,2 );
         
     }
-    
+    }
 }
