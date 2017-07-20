@@ -75,6 +75,9 @@ public class CuevasShip extends Ship
         
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
         this.fire(arena, x, y);
+        this.fire(arena, x, y);
+        this.fire(arena, x, y);
+        this.fire(arena, x, y);
             }
         }
     }
