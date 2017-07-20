@@ -25,7 +25,8 @@ public class CannonFodder extends Ship {
     @Override
     public void doTurn(Arena arena){
         // Fill in your strategy here
-         // gets the current location of the ship
+        // gets the current location of the ship
+        
         Coord coord = this.getCoord();
         int x = coord.getX();
         int y = coord.getY();
