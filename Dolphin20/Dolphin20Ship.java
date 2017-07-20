@@ -59,10 +59,10 @@ for (int i = 0; i < nearby.size(); i++) {
         this.move(arena, Direction.EAST);
         this.move(arena, Direction.EAST);
         this.move(arena, Direction.EAST);
-        List<Ship> nearby = this.getNearyShips(arena);
+        List<Ship> nearby2 = this.getNearbyShips(arena);
         
         if (nearby.size() > 0) {
-           Ship first = nearby.get(0);
+           Ship first = nearby2.get(0);
         
            Coord coord =this.getShipCoord(arena, first);
            int x = coord.getX();

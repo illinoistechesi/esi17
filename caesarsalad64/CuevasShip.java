@@ -74,7 +74,7 @@ public class CuevasShip extends Ship
         int y = coord.getY();
         this.move(arena, Direction.SOUTH);
     }
-    else {
+    /*else {
         // make a list of all the location, and store it in a variable
         Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
         
@@ -85,5 +85,7 @@ public class CuevasShip extends Ship
         this.fire(arena, x, y);
             }
         }
+    }*/
+    }
     }
 }
