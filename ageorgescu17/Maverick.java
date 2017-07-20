@@ -10,11 +10,11 @@ public class Maverick extends Ship {
     
     public Maverick() {
         this.initializeName("Maverick");
-        this.initializeOwner("Your Name");
-        this.initializeHull(1);
-        this.initializeFirepower(1);
-        this.initializeSpeed(1);
-        this.initializeRange(1);
+        this.initializeOwner("Adriana");
+        this.initializeHull(4);
+        this.initializeFirepower(2);
+        this.initializeSpeed(2);
+        this.initializeRange(2);
     }
     
     /*
@@ -28,14 +28,45 @@ public class Maverick extends Ship {
        
         this.move(arena, Direction.EAST);
         List <Ship> nearby = this.getNearbyShips(arena);
-        if (nearby.size() > 0 ){
-            Ship first = nearby.get(0);
-            Coord coord = getShipCoord(arena, first);
+        
+        for (int i = 0; i < nearby.size(); i++){
+            Ship ship = nearby.get(i);
+            String myTeam = this.getTeam();
+            String theirTeam = ship.getTeam();
+                if (theirTeam.equals(myTeam)){
+                } else{
+                   Coord coord = ship.getCoord();
             int x = coord.getX();
             int y = coord.getY();
             //fire at ships
-            this.fire(arena, x,y);
-        }
+            this.fire(arena, x,y); 
+            //Moving towards ship coord
+            if (x > 8) {
+        this.move(arena, Direction.WEST);
     }
+    else if (x < 2) {
+        this.move(arena, Direction.EAST);
+    }
+    else if (y > 8) {
+        this.move(arena, Direction.NORTH);
+    }
+    else if (y < 2) {
+        this.move(arena, Direction.SOUTH);
+    }
+    else {
+        Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
+        //Direction randomNumber = arena.getRandom().nextInt(4);
+        //this.move(arena, possibleMovement[randomNumber]);
+        
+    }
+     // ship using this instruction will fire at location (x: 0, y: 0) each turn
+    this.fire(arena, 0, 0);
+        }
+    
+        
+        
+        }
+        
+}
     
 }
