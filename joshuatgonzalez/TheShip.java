@@ -13,13 +13,13 @@ public class TheShip extends Ship {
         this.initializeOwner("Joshua Gonzalez");
         this.initializeHull(2);
         this.initializeFirepower(3);
-        this.initializeSpeed(2);
-        this.initializeRange(3);
+        this.initializeSpeed(1);
+        this.initializeRange(4);
         
     }
     
     /*
-     * Determines what actions the ship will take on a given turn
+     * Determines what actions the ship  will take on a given turn
      * @param arena (Arena) the battlefield for the match
      * @return void
      */
@@ -39,6 +39,21 @@ public class TheShip extends Ship {
         fire(Arena arena, int x, int y)
         // Fill in your strategy here
   */
+       // this.move(arena, Direction.WEST);
+        this.move(arena, Direction.WEST);
+        //this.fire(arena, 07, 02);
+      //  this.getNearbyShips(arena);
+        List<Ship> nearby = this.getNearbyShips(arena);
+       // System.out.println(this.getNearbyShips(arena));
+        
+        
+        
+       Ship target = nearby.get(0);
+       Coord location = getShipCoord(arena,target);
+        int x = location.getX();
+        int y = location.getY();
+        System.out.println(x+" "+y);
+        this.fire(arena, x, y);
     }
     
 }
