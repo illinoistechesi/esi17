@@ -24,30 +24,26 @@ public class RoldanShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        // Fill in your strategy here
-        
-        /*
-    if (x > 1) {
-    this.move (Arena arena, Direction. NORTH);
-    }
-    if (x < 3){
-    fire(Arena arena, int 3, int 1);
-    }
-{    List<Ship> list = this.getNearbyShips(arena);
-Ship enemy = list.get(0);
-System.out.println("Enemy Ship: " + enemy.getName());
-System.out.println("Firepower: " + enemy.getFirepower());
-
-if (enemy.getSpeed() > this.getSpeed()) {
-    System.out.println("The enemy ship will move before my ship.");
-} else if (enemy.getSpeed() > this.getSpeed()) {
-    System.out.println("The enemy ship will move after my ship.");
-} else {
-    System.out.println("The enemy ship might move before or after my ship.");
-}
-
-int hitsTaken = enemy.getHull() - enemy.getHealth();
-System.out.println("Enemy has taken " + hitsTaken + " hits.");
- */
+        // FIll in your strategy here
+   
+        Coord me = this.getCoord();
+        int a = me.getX();
+        int b = me.getY();
+        String myTeam = this.getTeam();
+        List<Ship> nearby = this.getNearbyShips(arena);
+        for(int i = 0;i < nearby.size();i++){
+            Ship ship = nearby.get(i);
+            String otherTeam = ship.getTeam();
+            if (!otherTeam.equals(myTeam)){
+                Coord enemyCoord = this.getShipCoord(arena, ship);
+                int enemyX = enemyCoord.getX();
+                int enemyY = enemyCoord.getY();
+                
+                this.move(arena, Direction.WEST);
+                this.move(arena, Direction.WEST);
+                this.fire(arena, enemyX, enemyY);
+            
+            }
+        }
     }
 }
