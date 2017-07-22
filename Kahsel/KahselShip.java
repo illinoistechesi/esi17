@@ -11,10 +11,10 @@ public class KahselShip extends Ship {
     public KahselShip() {
         this.initializeName("Kahsel");
         this.initializeOwner("Ka Hsel Nay");
-        this.initializeHull(5);
+        this.initializeHull(3);
         this.initializeFirepower(3);
         this.initializeSpeed(1);
-        this.initializeRange(1);
+        this.initializeRange(3);
     }
     
     /*
