@@ -48,6 +48,7 @@ public class MercadoShip extends Ship {
                 int enemyX = enemyCoord.getX();
                 int enemyY = enemyCoord.getY();
                 this.fire(arena, enemyX, enemyY);
+                if(this.getRemainingShots() == 0) break;
             }
         }
     }
