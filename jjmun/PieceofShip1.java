@@ -25,10 +25,11 @@ public class PieceofShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        this.move(arena, Direction.EAST);
-        //this.move(arena, Direction.EAST);
-        //this.move(arena, Direction.EAST);
-        
+                this.move(arena, Direction.WEST);
+        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.NORTH);
+        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.SOUTH);
         List<Ship> nearby = this.getNearbyShips(arena);
 // Loop over all the ships
 for (int i = 0; i < nearby.size(); i++) {
