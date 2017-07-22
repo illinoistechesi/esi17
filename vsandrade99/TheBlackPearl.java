@@ -1,5 +1,5 @@
 package esi17.vsandrade99;
-import core.*;
+import battleship.core.*;
 import java.util.List;
 
 /*
@@ -29,7 +29,7 @@ public class TheBlackPearl extends Ship {
         //int goalX=0;
         //int goalY=0;
         
-        arena.move(this, Direction.EAST);
+        /*arena.move(this, Direction.EAST);
         arena.move(this, Direction.EAST);
         arena.move(this, Direction.EAST);
         arena.fire(this, 7,1);
@@ -41,13 +41,13 @@ public class TheBlackPearl extends Ship {
         arena.fire(this, 7,3);
         arena.move(this, Direction.NORTH);
         arena.move(this, Direction.WEST);
-        arena.move(this, Direction.WEST);
+        arena.move(this, Direction.WEST);*/
     }
     /*
      * Example of how not to shoot your teammates
     */
     // Get all nearby ships
-    List<Ship> nearby = this.getNearbyShips(arena);
+    /*List<Ship> nearby = this.getNearbyShips(arena);
     // Loop over all the ships
     for (int i = 0; i < nearby.size(); i++) {
         Ship ship = nearby.get(i);
@@ -72,7 +72,7 @@ public class TheBlackPearl extends Ship {
         
             this.fire(arena, x, y);
         }
-    }
+    }*/
     
     
 }

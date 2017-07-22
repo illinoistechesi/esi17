@@ -49,27 +49,11 @@ public class CuevasShip extends Ship
             Coord location = this.getShipCoord(arena, unknown);
             int x = location.getX();
             int y = location.getY();
-        // In the new version of battleship, you can get any ship's coordinate, even if it is out of your range
-        // But, since we used getNearbyShips(), all ships in this loop are in range
-       
-        Coord coord = ship.getCoord();
-        int x = coord.getX();
-        int y = coord.getY();
-        this.move(arena, Direction.SOUTH);
-    }
-    /*else {
-        // make a list of all the location, and store it in a variable
-        Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-        
-        // get a random number and store it in a variable
-        Direction randomNumber = arena.getRandom().nextInt(4); //Forgot this semicolon
         
             this.fire(arena, x, y);
             
             System.out.println("Fired at: " + x + ", " + y); 
             }
         }
-    }*/
-    }
     }
 }

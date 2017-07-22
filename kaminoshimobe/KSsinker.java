@@ -35,11 +35,6 @@ public class KSsinker extends Ship {
                 
         
         
-        //Coord shipLocation = this.getSelfCoord(arena);
-        // Additions by Vinesh
-        Coord shipLocation = this.getCoord();
-        int shipX = shipLocation.getX();
-
         //Coord enemyShip = this.getNearbyShips(arena);
         
         
@@ -85,22 +80,6 @@ public class KSsinker extends Ship {
                     int sneak = x - 5;
                     
                     
-<<<<<<< HEAD
-                    if(x > shipX && RAN > shipX){
-                    for (int j = 0; j < RAN; j++){
-                        this.move(arena, Direction.EAST);
-                    }
-                }
-                    
-                
-                if(x == sneak){
-                    this.move(arena, Direction.EAST);
-                    this.move(arena, Direction.EAST);
-                    this.fire(arena, x, y);
-                    this.move(arena, Direction.WEST);
-                    this.move(arena, Direction.WEST);
-                }
-=======
                 //     if(x > shipX && RAN > shipX){
                 //     for (int e = 0; e < RAN; e++){
                 //         this.move(arena, Direction.EAST);
@@ -114,7 +93,6 @@ public class KSsinker extends Ship {
                     this.move(arena, Direction.WEST);
                     this.move(arena, Direction.WEST);
                 
->>>>>>> d1a8c250a619258cd6a5f1743c9221ffac8094e7
                     
                     
                     // this.fire(arena, x, y);
