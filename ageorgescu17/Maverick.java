@@ -25,8 +25,9 @@ public class Maverick extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // Fill in your strategy here
-       
+        int minHealth = 100;
         this.move(arena, Direction.EAST);
+        Ship target = null;
         List <Ship> nearby = this.getNearbyShips(arena);
         
         for (int i = 0; i < nearby.size(); i++){
@@ -35,38 +36,45 @@ public class Maverick extends Ship {
             String theirTeam = ship.getTeam();
                 if (theirTeam.equals(myTeam)){
                 } else{
-                   Coord coord = ship.getCoord();
+                    if (ship.getHealth() < minHealth){
+                      target = ship;
+                      minHealth = ship.getHealth();
+                    }
+                   
+                    
+                  
+        }
+        }
+            if (target != null) {
+                 Coord coord = target.getCoord();
             int x = coord.getX();
             int y = coord.getY();
+            int myX = this.getCoord().getX();
+            int myY = this.getCoord().getY();
+            
+            if (x < myX) {
+                this.move(arena, Direction.WEST);
+            
+                
+            } else if (x > myX) {
+                this.move(arena, Direction.EAST);
+            
+                
+            } else if (y < myY) {
+                this.move(arena, Direction.NORTH);
+            
+                
+            } else if (y > myY) {
+                this.move(arena, Direction.SOUTH);
+            }
+            
+           
             //fire at ships
             this.fire(arena, x,y); 
-            //Moving towards ship coord
-            if (x > 8) {
-        this.move(arena, Direction.WEST);
-    }
-    else if (x < 2) {
-        this.move(arena, Direction.EAST);
-    }
-    else if (y > 8) {
-        this.move(arena, Direction.NORTH);
-    }
-    else if (y < 2) {
-        this.move(arena, Direction.SOUTH);
-    }
-    else {
-        Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-        //Direction randomNumber = arena.getRandom().nextInt(4);
-        //this.move(arena, possibleMovement[randomNumber]);
-        
-    }
-     // ship using this instruction will fire at location (x: 0, y: 0) each turn
-    this.fire(arena, 0, 0);
-        }
-    
-        
-        
-        }
-        
+            this.fire(arena, x,y); 
+            }
+                          
+           
 }
     
 }
