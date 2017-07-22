@@ -33,17 +33,17 @@ public class CustomShip extends Ship {
         int shipY = shipLocation.getY();
         //current location Greater than goal's x location
         //if (5<1)
-        if(shipX <= goalX){
+        if(shipX < goalX){
             arena.move(this, Direction.EAST);
         }
-        else if(shipX >= goalX){
+        else if(shipX > goalX){
             arena.move(this, Direction.WEST);
         }
         
-        if(shipY <= goalY){
+        if(shipY < goalY){
             arena.move(this, Direction.NORTH);
         }
-        else{
+        else{shipY > goalY){
             arena.move(this, Direction.SOUTH);
         }
         
