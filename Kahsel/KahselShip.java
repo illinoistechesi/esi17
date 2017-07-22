@@ -11,10 +11,10 @@ public class KahselShip extends Ship {
     public KahselShip() {
         this.initializeName("Kahsel");
         this.initializeOwner("Ka Hsel Nay");
-        this.initializeHull(5);
+        this.initializeHull(3);
         this.initializeFirepower(3);
         this.initializeSpeed(1);
-        this.initializeRange(1);
+        this.initializeRange(3);
     }
     
     /*
@@ -29,6 +29,10 @@ public class KahselShip extends Ship {
         this.move(arena, Direction.SOUTH);
         this.move(arena, Direction.WEST);
         this.move(arena, Direction.NORTH);
+        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.NORTH);
+        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.SOUTH);
        
         
         List<Ship> nearby = this.getNearbyShips(arena);
@@ -47,8 +51,20 @@ for (int i = 0; i < nearby.size(); i++) {
         // In the new version of battleship, you can get any ship's coordinate, even if it is out of your range
         // But, snce we used getNearbyShips(), all ships in this loop are in range
         Coord coord = ship.getCoord();
+        
         int x = coord.getX();
         int y = coord.getY();
+        
+      //  Coord my = this.getCoord();
+       // int x1 = coord.getX();
+        //int y1 = coord.getY();
+        
+        //if (x1 < x){
+            
+           // this.move(arena, Direction.East)
+       // }
+        
+        
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
         this.fire(arena, x, y);
     }
