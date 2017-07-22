@@ -25,49 +25,41 @@ public class NehaShip extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // Fill in your strategy here
+       int minHealth = 100;
        this.move(arena, Direction.EAST);
-       
+       Ship target = null;
        List<Ship> nearby = this.getNearbyShips(arena);
        for (int i = 0; i < nearby.size(); i++) {
          Ship ship = nearby.get(i);
           String myTeam = this.getTeam();
           String theirTeam = ship.getTeam();
           if (theirTeam.equals(myTeam)) {
+              // Don't shoot!
           } else {
-              Coord coord = ship.getCoord();
-              int x = coord.getX();
-              int y = coord.getY();
-              this.fire(arena, x, y);
-    
+             if (ship.getHealth() < minHealth) {
+                 target=ship;
+                 minHealth = ship.getHealth();
+             }
           }
-           Coord coord = this.getCoord();
-         int x = coord.getX();
-         int y = coord.getY();
-         
-         if (x>8){
-             this.move(arena, Direction.WEST);
-         }
-         else if (x<2) {
-             this.move(arena, Direction.EAST);
-         }
-         else if (y>8){
-             this.move(arena, Direction.SOUTH);
-         }
-         else if (y<2){
-             this.move(arena, Direction.NORTH);
-         }
-         else {
-             // make a list of all the location, and store it in a variable
-            Direction[] possibleMovement = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-            
-            // get a random number and store it in a variable
-            //Direction randomNumber = arena.getRandom().nextInt(4);
-            
-            // get a random movement by using the random number to access one possibleMovement 
-            //this.move(arena, possibleMovement[randomNumber]);
-         }
-         
-         this.fire(arena, 0,0);
+       }
+       if (target != null) {
+            Coord coord = target.getCoord();
+          int x = coord.getX();
+          int y = coord.getY();
+          int myX = this.getCoord().getX();
+          int myY = this.getCoord().getY();
+    
+          if (myX>x) {
+              this.move(arena,Direction.WEST);
+          } else if (myX <x) {
+              this.move(arena,Direction.EAST);
+          } else if (myY > y) {
+              this.move(arena,Direction.NORTH);
+          } else {
+              this.move(arena,Direction.SOUTH);
+          }
+            this.fire(arena, x, y);
+            this.fire(arena, x, y);
        }
        
     
