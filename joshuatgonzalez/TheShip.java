@@ -11,10 +11,10 @@ public class TheShip extends Ship {
     public TheShip() {
         this.initializeName("TheShip");
         this.initializeOwner("Joshua Gonzalez");
-        this.initializeHull(2);
+        this.initializeHull(4);
         this.initializeFirepower(3);
         this.initializeSpeed(1);
-        this.initializeRange(4);
+        this.initializeRange(2);
         
     }
     
@@ -49,11 +49,15 @@ public class TheShip extends Ship {
         
         
        Ship target = nearby.get(0);
-       Coord location = getShipCoord(arena,target);
-        int x = location.getX();
-        int y = location.getY();
-        System.out.println(x+" "+y);
-        this.fire(arena, x, y);
+       String myTeam = this.getTeam();
+       String otherTeam = target.getTeam();
+       if(!otherTeam.equals(myTeam)){   
+            Coord location = getShipCoord(arena,target);
+            int x = location.getX();
+            int y = location.getY();
+            System.out.println(x+" "+y);
+            this.fire(arena, x, y);
+       }
     }
     
 }
