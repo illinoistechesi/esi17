@@ -11,9 +11,9 @@ public class Dolphin20Ship extends Ship {
     public Dolphin20Ship() {
         this.initializeName("Dolphin20 Ship");
         this.initializeOwner("Jovany Soto");
-        this.initializeHull(3);
+        this.initializeHull(4);
         this.initializeFirepower(3);
-        this.initializeSpeed(2);
+        this.initializeSpeed(1);
         this.initializeRange(2);
     }
     
