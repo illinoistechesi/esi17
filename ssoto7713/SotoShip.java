@@ -11,10 +11,10 @@ public class SotoShip extends Ship {
     public SotoShip() {
         this.initializeName("SotoShip");
         this.initializeOwner("Soto");
-        this.initializeHull(4);
+        this.initializeHull(2);
         this.initializeFirepower(2);
         this.initializeSpeed(1);
-        this.initializeRange(3);
+        this.initializeRange(5);
     }
     
     /*
@@ -30,11 +30,11 @@ public class SotoShip extends Ship {
     int b = me.getY();
     
     
-    if (a < 5) {
+    if (a < 4) {
         this.move(arena, Direction.EAST);
         
     }
-    else if (a > 5) {
+    else if (a > 4) {
         this.move(arena, Direction.WEST);
     }
     
