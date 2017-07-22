@@ -9,7 +9,7 @@ import java.util.List;
 public class KSsinker extends Ship {
     
     public KSsinker() {
-        this.initializeName("K.S. Sinker");
+        this.initializeName("K.S. Kruiser");
         this.initializeOwner("Abdul Muhammad");
         this.initializeHull(2);
         this.initializeFirepower(1);
@@ -25,16 +25,27 @@ public class KSsinker extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // Fill in your strategy here
-     
+        int turn = arena.getTurn();
+        if(turn == 0){
+         this.move(arena, Direction.EAST);
+         this.move(arena, Direction.EAST);
+        }
+        this.move(arena, Direction.EAST);
        
+                
         
         
         //Coord shipLocation = this.getSelfCoord(arena);
         // Additions by Vinesh
         Coord shipLocation = this.getCoord();
         int shipX = shipLocation.getX();
+
         //Coord enemyShip = this.getNearbyShips(arena);
         
+        
+        Coord me = this.getCoord();
+        int a = me.getX();
+        int b = me.getY();
         
         // Coord target this.getShipCoord(Arena arena, Ship ship);
         // int targetX = target.getX();
@@ -60,9 +71,11 @@ public class KSsinker extends Ship {
                 //NOTHING
             }   else {
                 
-                    Coord coord = ship.getCoord();
-                    int x = coord.getX();
-                    int y = coord.getY();
+                    Coord enem = ship.getCoord();
+                    Coord coord = this.getCoord();
+                    int x = enem.getX();
+                    int y = enem.getY();
+                    int shipX = enem.getX();
                     int HP = ship.getHealth();
                     int SPD = ship.getSpeed();
                     int RAN = ship.getRange();
@@ -72,6 +85,7 @@ public class KSsinker extends Ship {
                     int sneak = x - 5;
                     
                     
+<<<<<<< HEAD
                     if(x > shipX && RAN > shipX){
                     for (int j = 0; j < RAN; j++){
                         this.move(arena, Direction.EAST);
@@ -86,11 +100,26 @@ public class KSsinker extends Ship {
                     this.move(arena, Direction.WEST);
                     this.move(arena, Direction.WEST);
                 }
+=======
+                //     if(x > shipX && RAN > shipX){
+                //     for (int e = 0; e < RAN; e++){
+                //         this.move(arena, Direction.EAST);
+                //     }
+                // }
+                    
+                
+                    this.fire(arena, x, y);
+                    this.move(arena, Direction.WEST);
+                    this.move(arena, Direction.WEST);
+                    this.move(arena, Direction.WEST);
+                    this.move(arena, Direction.WEST);
+                
+>>>>>>> d1a8c250a619258cd6a5f1743c9221ffac8094e7
                     
                     
                     // this.fire(arena, x, y);
                     
-            }
+                }
             
         // if (nearby.size() == 0){
         //     if(shipY == 0){
