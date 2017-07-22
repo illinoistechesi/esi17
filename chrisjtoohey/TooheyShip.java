@@ -24,26 +24,35 @@ public class TooheyShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        this.move(arena, Direction.WEST);
         List<Ship> nearby = this.getNearbyShips(arena);
-  /**      if (nearby.size() > 0) {
-            Ship first = nearby.get(0);
-            Coord coord = this.getShipCoord(arena, first);
-            int x = coord.getX();
-            int y = coord.getY();
-            this.fire(arena, x, y);
-        } */
+        Ship lowhealth = null;
+        
         for (int i = 0; i < nearby.size(); i++) {
             Ship ship = nearby.get(i);
             String myTeam = this.getTeam();
             String theirTeam = ship.getTeam();
             if (theirTeam.equals(myTeam)) {
             }   else {
-                Coord coord = ship.getCoord();
-                int x = coord.getX();
-                int y = coord.getY();
-                this.fire(arena, x, y);
+                int healthvalue = 10;
+                if(lowhealth != null) {
+                    healthvalue = lowhealth.getHealth();
+                }
+                    if (ship.getHealth() < healthvalue) {
+                    lowhealth = ship;
+                    System.out.println("Found a new lowest ship");
+                    }
+                
             }
-      }
+        }
+        if (lowhealth != null) {
+            Coord coord = lowhealth.getCoord();
+            int x = coord.getX();
+            int y = coord.getY();
+            this.fire(arena, x, y);
+        } else if (lowhealth == null){
+            
+             
+        }
+        } 
+
     }
-}
