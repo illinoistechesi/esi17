@@ -24,6 +24,7 @@ public class Mars extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+        this.move(arena, Direction.EAST);
        // Get all nearby ships
     List<Ship> nearby = this.getNearbyShips(arena);
 // Loop over all the ships
@@ -36,26 +37,36 @@ public class Mars extends Ship {
     // It will return true if the strings are equal and false if they are not
     if (theirTeam.equals(myTeam)) {
         // Don't shoot!
+        
 
-    } else {
+    } else if (nearby.size()>0) {
         // In the new version of battleship, you can get any ship's coordinate, even if it is out of your range
         // But, snce we used getNearbyShips(), all ships in this loop are in range
         Coord coord = ship.getCoord();        
         int x = coord.getX();
         int y = coord.getY();
+        
+        Ship a = nearby.get(0);
+        Coord coord2 = this.getShipCoord(arena, a);
+        int shipX = coord2.getX();
+        int shipY = coord2.getY();
+        // this.move(arena, Direction.EAST);
+        this.fire(arena, x, y);
+        this.fire(arena, x, y);
+        this.fire(arena, x, y);
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
   
-             if (nearby.size()>0) {
-            Ship a = nearby.get(0);
-           Coord coord2 = this.getShipCoord(arena, a);
-           int shipX = coord2.getX();
-           int shipY = coord2.getY();
-           this.move(arena, Direction.EAST);
-           this.fire(arena, x, y);
-           this.fire(arena, x, y);
-           this.fire(arena, x, y);
+    //          if (nearby.size()>0) {
+    //         Ship a = nearby.get(0);
+    //       Coord coord2 = this.getShipCoord(arena, a);
+    //       int shipX = coord2.getX();
+    //       int shipY = coord2.getY();
+    //       this.move(arena, Direction.EAST);
+    //       this.fire(arena, x, y);
+    //       this.fire(arena, x, y);
+    //       this.fire(arena, x, y);
            
-    }
+    // }
        
        
        
