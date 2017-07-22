@@ -1,20 +1,20 @@
-package esi17.ssoto7713;
+package esi17.Dolphin20;
 import battleship.core.*;
 import java.util.List;
 
 /*
- * SotoShip
- * @author Soto
+ * mruiz9
+ * @author Your Name
  */
-public class SotoShip extends Ship {
+public class guppy extends Ship {
     
-    public SotoShip() {
-        this.initializeName("SotoShip");
-        this.initializeOwner("Soto");
-        this.initializeHull(2);
-        this.initializeFirepower(2);
+    public guppy() {
+        this.initializeName("mruiz9");
+        this.initializeOwner("Guppy");
+        this.initializeHull(5);
+        this.initializeFirepower(3);
         this.initializeSpeed(1);
-        this.initializeRange(5);
+        this.initializeRange(1);
     }
     
     /*
@@ -25,21 +25,12 @@ public class SotoShip extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // Fill in your strategy here
-           Coord me = this.getCoord();
-    int a = me.getX();
-    int b = me.getY();
-    
-    
-    if (a < 4) {
-        this.move(arena, Direction.EAST);
-        
-    }
-    else if (a > 4) {
         this.move(arena, Direction.WEST);
-    }
-    
-        //gets neaby enemies
+        this.move(arena, Direction.NORTH);
+        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.NORTH);
         List<Ship> nearby = this.getNearbyShips(arena);
+            
 // Loop over all the ships
 for (int i = 0; i < nearby.size(); i++) {
     Ship ship = nearby.get(i);
@@ -58,8 +49,7 @@ for (int i = 0; i < nearby.size(); i++) {
         int y = coord.getY();
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
         this.fire(arena, x, y);
-        this.fire(arena, x, y);
     }
 }
-}
-}
+        } 
+    }
