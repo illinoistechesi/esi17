@@ -11,10 +11,10 @@ public class MoistNoodle extends Ship {
     public MoistNoodle() {
         this.initializeName("MoistNoodle");
         this.initializeOwner("Nick");
-        this.initializeHull(2);
-        this.initializeFirepower(2);
-        this.initializeSpeed(1);
-        this.initializeRange(5);
+        this.initializeHull(8);
+        this.initializeFirepower(0);
+        this.initializeSpeed(2);
+        this.initializeRange(0);
     }
     
     /*
@@ -26,17 +26,19 @@ public class MoistNoodle extends Ship {
     public void doTurn(Arena arena) {
         
         Coord me = this.getCoord();
-    int a = me.getX();
-    int b = me.getY();
+        int a = me.getX();
+        int b = me.getY();
     
     
-    if (a > 5) {
+        if (a > 5) {
+        this.move(arena, Direction.WEST);
         this.move(arena, Direction.WEST);
         
-    }
-    else if (a < 5) {
+        }
+        else if (a < 5) {
         this.move(arena, Direction.EAST);
-    }
+        this.move(arena, Direction.EAST);
+        }
     
         //gets neaby enemies
         List<Ship> nearby = this.getNearbyShips(arena);
@@ -46,6 +48,7 @@ for (int i = 0; i < nearby.size(); i++) {
     // Call the getTeam() method on any ship to get its team name
     String myTeam = this.getTeam();
     String theirTeam = ship.getTeam();
+    
     // To compare Strings, we have to use the special .equals() method
     // It will return true if the strings are equal and false if they are not
     if (theirTeam.equals(myTeam)) {
@@ -53,12 +56,26 @@ for (int i = 0; i < nearby.size(); i++) {
     } else {
         // In the new version of battleship, you can get any ship's coordinate, even if it is out of your range
         // But, snce we used getNearbyShips(), all ships in this loop are in range
-        Coord coord = ship.getCoord();
-        int x = coord.getX();
-        int y = coord.getY();
+        Coord enemy = ship.getCoord();
+        int x = enemy.getX();
+        int y = enemy.getY();
+        
+      //  this.fire(arena, x, y);
+        //this.fire(arena, x, y);
+        
+       
+       // for (int firecount=0;firecount<6;firecount++){
+    //   if ship.getHealth()>0;
+      //  this.fire(arena, x, y);
+        //else
+        //for (int i = 0; i < nearby.size(); i++) {
+    
+    
+    ;
+        
+        }
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
-        this.fire(arena, x, y);
-        this.fire(arena, x, y);
+
     }
 }
         
@@ -69,7 +86,7 @@ for (int i = 0; i < nearby.size(); i++) {
     
         
         
-        }
+        
         
 
 
