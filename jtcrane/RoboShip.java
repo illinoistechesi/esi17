@@ -11,17 +11,10 @@ public class RoboShip extends Ship {
     public RoboShip() {
         this.initializeName("Robo Ship");
         this.initializeOwner("Jalen Crane");
-<<<<<<< HEAD
-        this.initializeHull(2);
-        this.initializeFirepower(3);
-        this.initializeSpeed(0);
-        this.initializeRange(5);
-=======
         this.initializeHull(1);
         this.initializeFirepower(4);
         this.initializeSpeed(1);
         this.initializeRange(4);
->>>>>>> eae713332383f2ac0890d1be4e204616519495ef
     }
     
     /*
@@ -31,10 +24,6 @@ public class RoboShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-<<<<<<< HEAD
-    // this.move(arena,Direction.EAST);
-=======
->>>>>>> eae713332383f2ac0890d1be4e204616519495ef
     /*List<Ship> nearby = nearby.get(0);
     Coord coord = this.getShipCoord()
     int x = coord.getX();
@@ -67,9 +56,6 @@ for (int i = 0; i < nearby.size(); i++) {
                     this.fire(arena, x, y);
                 }
                 
-                // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
-                // this.move(arena,Direction.EAST);
-                // this.move(arena,Direction.EAST);
                 this.fire(arena, x, y);
                 
                 if(HP == 1) {
