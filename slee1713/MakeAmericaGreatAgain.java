@@ -47,11 +47,11 @@ public class MakeAmericaGreatAgain extends Ship {
     int b = me.getY();
     
     
-    if (a > 4) {
+    if (a > 9) {
         this.move(arena, Direction.WEST);
         
     }
-    else if (a < 4) {
+    else if (a < 9) {
         this.move(arena, Direction.EAST);
     }
        // this.move(arena, Direction.EAST);
