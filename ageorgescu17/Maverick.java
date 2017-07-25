@@ -28,53 +28,61 @@ public class Maverick extends Ship {
         int minHealth = 100;
         this.move(arena, Direction.EAST);
         Ship target = null;
+        
+        //Checking for nearby ships
         List <Ship> nearby = this.getNearbyShips(arena);
         
         for (int i = 0; i < nearby.size(); i++){
             Ship ship = nearby.get(i);
             String myTeam = this.getTeam();
             String theirTeam = ship.getTeam();
-                if (theirTeam.equals(myTeam)){
-                } else{
-                    if (ship.getHealth() < minHealth){
-                      target = ship;
-                      minHealth = ship.getHealth();
-                    }
+            if (theirTeam.equals(myTeam)){
+            } 
+            else{
+                
+                if (ship.getHealth() < minHealth){
+                     target = ship;
+                     minHealth = ship.getHealth();
+                }
                    
                     
                   
-        }
-        }
-            if (target != null) {
-                 Coord coord = target.getCoord();
+            }
+    }
+       //Receives enemy coordinates than moves and fires
+        if (target != null) {
+            Coord coord = target.getCoord();
             int x = coord.getX();
             int y = coord.getY();
             int myX = this.getCoord().getX();
             int myY = this.getCoord().getY();
-            
+        
             if (x < myX) {
                 this.move(arena, Direction.WEST);
-            
-                
-            } else if (x > myX) {
+            } 
+        
+            else if (x > myX) {
                 this.move(arena, Direction.EAST);
-            
-                
-            } else if (y < myY) {
+            } 
+        
+            else if (y < myY) {
                 this.move(arena, Direction.NORTH);
-            
-                
-            } else if (y > myY) {
+            } 
+       
+            else if (y > myY) {
                 this.move(arena, Direction.SOUTH);
             }
             
-           
-            //fire at ships
+            //fire at ship
             this.fire(arena, x,y); 
             this.fire(arena, x,y); 
-            }
+        }
+        else {
+            this.move(arena, Direction.EAST);
+        }    
+            
                           
            
-}
+    }
     
 }
