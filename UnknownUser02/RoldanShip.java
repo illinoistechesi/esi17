@@ -25,25 +25,16 @@ public class RoldanShip extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // FIll in your strategy here
-   
-        Coord me = this.getCoord();
-        int a = me.getX();
-        int b = me.getY();
-        String myTeam = this.getTeam();
+        
+         this.move(arena, Direction.SOUTH);
         List<Ship> nearby = this.getNearbyShips(arena);
-        for(int i = 0;i < nearby.size();i++){
-            Ship ship = nearby.get(i);
-            String otherTeam = ship.getTeam();
-            if (!otherTeam.equals(myTeam)){
-                Coord enemyCoord = this.getShipCoord(arena, ship);
-                int enemyX = enemyCoord.getX();
-                int enemyY = enemyCoord.getY();
-                
-                this.move(arena, Direction.WEST);
-                this.move(arena, Direction.WEST);
-                this.fire(arena, enemyX, enemyY);
-            
+        if (nearby.size() > 0) {
+            Ship first = nearby.get(0);
+            Coord coord = this.getShipCoord(arena, first);
+            int x = coord.getX();
+            int y = coord.getY();
+            this.fire(arena, x, y);
+            this.fire(arena, x, y);
             }
         }
     }
-}
