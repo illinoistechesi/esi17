@@ -31,8 +31,13 @@ public class CuevasShip extends Ship
     public void doTurn(Arena arena) {
     // Fill in your strategy here
         
-    this.move(arena, Direction.WEST);
-    
+    //My ship's location:
+    Coord coord = this.getCoord();
+    int myX = coord.getX();
+    int myY = coord.getY();
+    System.out.println("My ship is at (" + myX + ", " + myY + ").");        
+
+    //Logic for finding teammates & firing at enemies:
     List<Ship> nearby = this.getNearbyShips(arena);
     for (int i = 0; i < nearby.size(); i++) 
     {
@@ -45,15 +50,24 @@ public class CuevasShip extends Ship
         }
         else
         {
+            //Get shots to take down a ship instead of random shots
             System.out.println("This ship is an enemy.");
             Coord location = this.getShipCoord(arena, unknown);
             int x = location.getX();
             int y = location.getY();
         
-            this.fire(arena, x, y);
+            for(i = 0; i < 3; i++)
+            {
+                this.fire(arena, x, y);
+            }
             
-            System.out.println("Fired at: " + x + ", " + y); 
+            //System.out.println(getNearbyShips(arena));
+            System.out.println("Fired at: (" + x + ", " + y + ")"); 
             }
         }
+        
+    //My ship's movement:
+    this.move(arena, Direction.WEST);
+        
     }
 }
