@@ -24,7 +24,7 @@ public class Pirateship extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.WEST);
       
         List<Ship> nearby = this.getNearbyShips(arena);
         for (int i = 0; i < nearby.size(); i++) {
