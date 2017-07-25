@@ -11,10 +11,10 @@ public class AlecShip extends Ship {
     public AlecShip() {
         this.initializeName("AlecShip");
         this.initializeOwner("Alec");
-        this.initializeHull(3);
-        this.initializeFirepower(3);
+        this.initializeHull(4);
+        this.initializeFirepower(2);
         this.initializeSpeed(1);
-        this.initializeRange(4);
+        this.initializeRange(3);
     }
     
     /*
@@ -24,7 +24,7 @@ public class AlecShip extends Ship {
      */
     @Override
         public void doTurn(Arena arena) {
-        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.EAST);
         
         List<Ship> nearby = this.getNearbyShips(arena);
         for (int i = 0; i < nearby.size(); i++) {
