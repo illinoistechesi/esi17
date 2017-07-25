@@ -12,7 +12,7 @@ public class KahselShip extends Ship {
         this.initializeName("Kahsel");
         this.initializeOwner("Ka Hsel Nay");
         this.initializeHull(3);
-        this.initializeFirepower(3);
+        this.initializeFirepower(4);
         this.initializeSpeed(1);
         this.initializeRange(3);
     }
@@ -25,14 +25,11 @@ public class KahselShip extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // Fill in your strategy here
+
         this.move(arena, Direction.WEST);
-        this.move(arena, Direction.SOUTH);
         this.move(arena, Direction.WEST);
-        this.move(arena, Direction.NORTH);
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.NORTH);
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.SOUTH);
+        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.WEST);
        
         
         List<Ship> nearby = this.getNearbyShips(arena);
