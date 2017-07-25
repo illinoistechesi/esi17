@@ -11,10 +11,10 @@ public class KSsinker extends Ship {
     public KSsinker() {
         this.initializeName("K.S. Kruiser");
         this.initializeOwner("Abdul Muhammad");
-        this.initializeHull(2);
+        this.initializeHull(4);
         this.initializeFirepower(1);
-        this.initializeSpeed(4);
-        this.initializeRange(3);
+        this.initializeSpeed(1);
+        this.initializeRange(4);
     }
     
     /*
@@ -26,11 +26,10 @@ public class KSsinker extends Ship {
     public void doTurn(Arena arena) {
         // Fill in your strategy here
         int turn = arena.getTurn();
-        if(turn == 0){
-         this.move(arena, Direction.EAST);
+        if(turn == 10){
          this.move(arena, Direction.EAST);
         }
-        this.move(arena, Direction.EAST);
+        
        
                 
         
@@ -88,10 +87,10 @@ public class KSsinker extends Ship {
                     
                 
                     this.fire(arena, x, y);
-                    this.move(arena, Direction.WEST);
-                    this.move(arena, Direction.WEST);
-                    this.move(arena, Direction.WEST);
-                    this.move(arena, Direction.WEST);
+                    if(HP == 1){
+                        this.fire(arena, x, y);
+                    }
+                    
                 
                     
                     
