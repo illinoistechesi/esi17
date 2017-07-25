@@ -13,8 +13,8 @@ public class AquafreezeShip extends Ship {
         this.initializeOwner("aquafreeze");
         this.initializeHull(3);
         this.initializeFirepower(2);
-        this.initializeSpeed(2);
-        this.initializeRange(3);
+        this.initializeSpeed(1);
+        this.initializeRange(4);
     }
     
     /*
@@ -27,11 +27,9 @@ public class AquafreezeShip extends Ship {
         // Fill in your strategy here
         List<Ship> nearby = this.getNearbyShips(arena);
         if(nearby.size()==0)
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
-     this.move(arena, Direction.EAST);
+     this.move(arena, Direction.SOUTH);
+     this.move(arena, Direction.SOUTH);
+     this.move(arena, Direction.SOUTH);
     /*
  * Example of how not to shoot your teammates
  */
