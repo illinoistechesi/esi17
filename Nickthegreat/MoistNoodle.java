@@ -11,12 +11,12 @@ public class MoistNoodle extends Ship {
     public MoistNoodle() {
         this.initializeName("MoistNoodle");
         this.initializeOwner("Nick");
-        this.initializeHull(8);
-        this.initializeFirepower(0);
-        this.initializeSpeed(2);
-        this.initializeRange(0);
+        this.initializeHull(2);
+        this.initializeFirepower(2);
+        this.initializeSpeed(1);
+        this.initializeRange(5);
     }
-    
+ 
     /*
      * Determines what actions the ship will take on a given turn
      * @param arena (Arena) the battlefield for the match
@@ -30,12 +30,8 @@ public class MoistNoodle extends Ship {
         int b = me.getY();
     
     
-        if (a > 5) {
-        this.move(arena, Direction.WEST);
-        this.move(arena, Direction.WEST);
         
-        }
-        else if (a < 5) {
+        if (a < 7) {
         this.move(arena, Direction.EAST);
         this.move(arena, Direction.EAST);
         }
@@ -60,8 +56,8 @@ for (int i = 0; i < nearby.size(); i++) {
         int x = enemy.getX();
         int y = enemy.getY();
         
-      //  this.fire(arena, x, y);
-        //this.fire(arena, x, y);
+        this.fire(arena, x, y);
+        this.fire(arena, x, y);
         
        
        // for (int firecount=0;firecount<6;firecount++){
