@@ -6,15 +6,15 @@ import java.util.List;
  * Custom Ship
  * @author Your Name
  */
-public class Pirateship extends Ship {
+public class Enemy extends Ship {
     
-    public Pirateship ()  {
-        this.initializeName("Pirateship");
+    public Enemy ()  {
+        this.initializeName("Enemy");
         this.initializeOwner("cguy1");
-        this.initializeHull(3);
+        this.initializeHull(2);
         this.initializeFirepower(3);
         this.initializeSpeed(1);
-        this.initializeRange(3);
+        this.initializeRange(4);
     }
     
     /*
@@ -38,9 +38,7 @@ public class Pirateship extends Ship {
                 Coord coord = this.getShipCoord(arena, unknown);
                 int x = coord.getX();
                 int y = coord.getY();
-                
                 this.fire(arena, x, y);
-               
             }
         }
         
