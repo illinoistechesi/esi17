@@ -11,9 +11,9 @@ public class FriendShip extends Ship {
     public FriendShip() {
         this.initializeName("FriendShip");
         this.initializeOwner("Your Name");
-        this.initializeHull(2);
+        this.initializeHull(4);
         this.initializeFirepower(3);
-        this.initializeSpeed(2);
+        this.initializeSpeed(0);
         this.initializeRange(3);
     }
     
@@ -24,54 +24,47 @@ public class FriendShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+        
+        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.SOUTH);
+        
  
         List<Ship> alive= arena.getAllShips();
         for (int i = 0; i < alive.size(); i++) {
             Ship ship = alive.get(i);
-    // Call the getTeam() method on any ship to get its team name
+            // Call the getTeam() method on any ship to get its team name
             String myTeam = this.getTeam();
             String theirTeam =ship.getTeam();
-    // To compare Strings, we have to use the special .equals() method
-    // It will return true if the strings are equal and false if they are not
+            // To compare Strings, we have to use the special .equals() method
+            // It will return true if the strings are equal and false if they are not
             if (theirTeam.equals(myTeam)) {
-        // Don't shoot!
+            // Don't shoot!
             } 
-        else {
+            else {
         
-            Coord coord = ship.getCoord();
-            int x = coord.getX();
-            int y = coord.getY();
-        // this.fire(arena, x, y);
+                Coord coord = ship.getCoord();
+                int x = coord.getX();
+                int y = coord.getY();
+                 this.fire(arena, x, y);
        
-            if(!arena.isInRange(this, ship ))
-            {
-                Coord my= this.getCoord();
-                int myx = my.getX();
+               /* if(!arena.isInRange(this, ship ))
+                {
+                     Coord my= this.getCoord();
+                     int myx = my.getX();
           
-                if(myx<x)
-                    this.move(arena, Direction.EAST);
+                     if(myx<x)
+                        this.move(arena, Direction.EAST);
         
-         
-            
-            }
-        if(arena.isInRange(this, ship )){
+                }
+                if(arena.isInRange(this, ship )){
                    this.fire(arena, x, y);
-             
-        
-        
-       
-        }
-        
-        
-       
-        
-        
-    }
+  
+                }
+        */
+         this.fire(arena, x, y);
 
-        
-    
-   
-        
-    }
+            }
+
+        }
     }
 }
