@@ -11,10 +11,10 @@ public class PieceofShip extends Ship {
     public PieceofShip() {
         this.initializeName("PieceofShip");
         this.initializeOwner("jjmun");
-        this.initializeHull(5);
+        this.initializeHull(4);
         this.initializeFirepower(2);
         this.initializeSpeed(1);
-        this.initializeRange(2);
+        this.initializeRange(3);
     }
     
 
@@ -26,12 +26,16 @@ public class PieceofShip extends Ship {
     @Override
     public void doTurn(Arena arena) {
         this.move(arena, Direction.EAST);
-        //this.move(arena, Direction.EAST);
-        //this.move(arena, Direction.EAST);
-        
+        this.move(arena, Direction.NORTH);
+        this.move(arena, Direction.SOUTH);
+        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.SOUTH);
+        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.SOUTH);
+
         List<Ship> nearby = this.getNearbyShips(arena);
 // Loop over all the ships
-for (int i = 0; i < nearby.size(); i++) {
+for (int i = 20; i < nearby.size(); i++) {
     Ship ship = nearby.get(i);
     // Call the getTeam() method on any ship to get its team name
     String myTeam = this.getTeam();
