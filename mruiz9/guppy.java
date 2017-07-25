@@ -9,12 +9,12 @@ import java.util.List;
 public class guppy extends Ship {
     
     public guppy() {
-        this.initializeName("mruiz9");
-        this.initializeOwner("Guppy");
-        this.initializeHull(5);
+        this.initializeName("guppy");
+        this.initializeOwner("guppy");
+        this.initializeHull(3);
         this.initializeFirepower(3);
-        this.initializeSpeed(1);
-        this.initializeRange(1);
+        this.initializeSpeed(2);
+        this.initializeRange(2);
     }
     
     /*
