@@ -11,10 +11,10 @@ public class Mars extends Ship {
     public Mars() {
         this.initializeName("Mars");
         this.initializeOwner("Austin Worley");
-        this.initializeHull(4);
+        this.initializeHull(3);
         this.initializeFirepower(3);
         this.initializeSpeed(1);
-        this.initializeRange(2);
+        this.initializeRange(3);
     }
     
     /*
@@ -45,15 +45,30 @@ public class Mars extends Ship {
         Coord coord = ship.getCoord();        
         int x = coord.getX();
         int y = coord.getY();
+        int h = ship.getHealth();
         
         Ship a = nearby.get(0);
         Coord coord2 = this.getShipCoord(arena, a);
         int shipX = coord2.getX();
         int shipY = coord2.getY();
         // this.move(arena, Direction.EAST);
+        if (h == 1){
+            this.fire(arena, x, y);
+            
+        }  
+        
         this.fire(arena, x, y);
+       
+        if (h == 1){
+            this.fire(arena, x, y);
+        }  
+        
         this.fire(arena, x, y);
-        this.fire(arena, x, y);
+      
+      
+      
+        //.fire(arena, x, y);
+        //this.fire(arena, x, y);
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
   
     //          if (nearby.size()>0) {
