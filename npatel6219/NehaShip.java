@@ -43,7 +43,7 @@ public class NehaShip extends Ship {
           }
        }
        if (target != null) {
-            Coord coord = target.getCoord();
+          Coord coord = target.getCoord();
           int x = coord.getX();
           int y = coord.getY();
           int myX = this.getCoord().getX();
@@ -51,9 +51,11 @@ public class NehaShip extends Ship {
     
           if (myX>x) {
               this.move(arena,Direction.WEST);
-          } else if (myX <x) {
+          } else {
+          //if (myX <x) {
               this.move(arena,Direction.EAST);
-          } else if (myY > y) {
+          } //else
+          if (myY > y) {
               this.move(arena,Direction.NORTH);
           } else {
               this.move(arena,Direction.SOUTH);
