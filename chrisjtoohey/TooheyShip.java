@@ -11,10 +11,10 @@ public class TooheyShip extends Ship {
     public TooheyShip() {
         this.initializeName("Toohey Ship");
         this.initializeOwner("Your Name");
-        this.initializeHull(1);
+        this.initializeHull(2);
         this.initializeFirepower(2);
         this.initializeSpeed(0);
-        this.initializeRange(7);
+        this.initializeRange(6);
     }
     
     /*
@@ -49,10 +49,7 @@ public class TooheyShip extends Ship {
             int x = coord.getX();
             int y = coord.getY();
             this.fire(arena, x, y);
-        } else if (lowhealth == null){
-            
-             
-        }
+        } 
         } 
 
     }
