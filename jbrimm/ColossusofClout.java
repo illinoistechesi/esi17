@@ -11,10 +11,10 @@ public class ColossusofClout extends Ship {
     public ColossusofClout() {
         this.initializeName("ColossusofClout");
         this.initializeOwner("jbrimm");
-        this.initializeHull(3);       //HEALTH
-        this.initializeFirepower(2); //POWER
-        this.initializeSpeed(2);     //SPEED
-        this.initializeRange(3);    //RANGE
+        this.initializeHull(2);       //HEALTH
+        this.initializeFirepower(3); //POWER
+        this.initializeSpeed(1);     //SPEED
+        this.initializeRange(4);    //RANGE
     }
     
     /*
@@ -46,7 +46,8 @@ public class ColossusofClout extends Ship {
         
         Coord location = this.getShipCoord(arena, unknown);
         int x = location.getX();
-        int y = location.getY();
+        int y = location.getY(); 
+        
         
         this.fire(arena, x, y);
 
