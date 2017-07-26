@@ -4,12 +4,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
+import esi17.vkannan3.QueenShip;
 
 /*
  * Hive Ship
  * @author Vinesh
  */
 public class HiveShip extends Ship {
+    
+    private QueenShip trueQueen;
     
     public HiveShip() {
         this.initializeName("Hive Ship");
@@ -27,61 +30,42 @@ public class HiveShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        Ship target = this.getNextTarget(arena);
-        while (target != null && this.getRemainingShots() > 0) {
-            this.approachTarget(arena, target);
-            Coord coord = target.getCoord();
-            while (!target.isSunk() && this.getRemainingShots() > 0){
-                this.fire(arena, coord.getX(), coord.getY());
-                System.out.println("Loop in line 36.");
-            }
-            target = this.getNextTarget(arena);
-        }
-    }
-    
-    public Ship getNextTarget(Arena arena) {
-        Ship target = null;
-        List<Ship> options = new ArrayList<Ship>();
-        for (Ship ship : this.getAllEnemyShips(arena)) {
-            int dist = HiveShip.getArenaDistanceBetween(this, ship);
-            int reach = this.getRemainingMoves() + this.getRange();
-            boolean isAlive = !ship.isSunk();
-            boolean canReach = reach >= dist;
-            if (isAlive && canReach) {
-                options.add(ship);
-            }
-        }
-        Ship self = this;
-        Collections.sort(options, new Comparator<Ship>() {
-            public int compare(Ship s1, Ship s2) {
-                int comparison = 0;
-                int d1 = HiveShip.getArenaDistanceBetween(self, s1);
-                int d2 = HiveShip.getArenaDistanceBetween(self, s2);
-                int diff = d1 - d2;
-                if (diff == 0) {
-                    int h1 = s1.getHealth();
-                    int h2 = s2.getHealth();
-                    comparison = h1 - h2;
-                } else {
-                    comparison = diff;
+        try {
+            QueenShip queen = this.getQueen(arena);
+            Ship target = queen.getNextTarget(arena, this);
+            while (target != null && this.getRemainingShots() > 0) {
+                this.approachTarget(arena, target);
+                Coord coord = target.getCoord();
+                while (!target.isSunk() && this.getRemainingShots() > 0){
+                    this.fire(arena, coord.getX(), coord.getY());
                 }
-                return comparison;
-            } 
-        });
-        if (options.size() > 0) {
-            target = options.get(0);
+                target = queen.getNextTarget(arena, this);
+            }
+            if (target == null && this.getRemainingMoves() > 0) {
+                Ship nextEnemy = queen.getNextEnemy(arena, this);
+                if (nextEnemy != null) {
+                    this.approachTarget(arena, nextEnemy);   
+                }
+            }
+        } catch (LostWillToFightException lwtfe) {
+            System.out.println(lwtfe);
         }
-        return target;
     }
     
-    public List<Ship> getAllEnemyShips(Arena arena) {
-        List<Ship> res = new ArrayList<Ship>();
-        for (Ship ship : arena.getAllShips()) {
-            if (!ship.isSameTeamAs(this)) {
-                res.add(ship);
+    public QueenShip getQueen(Arena arena) throws LostWillToFightException {
+        if (this.trueQueen == null) {
+            for (Ship ship : arena.getAllShips()) {
+                if (ship instanceof QueenShip) {
+                    QueenShip queen = (QueenShip) ship;
+                    this.trueQueen = queen;
+                    break;
+                }
             }
         }
-        return res;
+        if (this.trueQueen == null || this.trueQueen.isSunk()) {
+            throw new LostWillToFightException("Alas, my queen is gone!");
+        }
+        return this.trueQueen;
     }
     
     public void approachTarget(Arena arena, Ship target) {
@@ -114,11 +98,7 @@ public class HiveShip extends Ship {
             if (yDir != null) {
                 boolean yFree = this.canMoveInDirection(arena, start, yDir);
                 if (yFree) {
-                    System.out.println(this.getCoord());
-                    System.out.println(yDir + " " + this);
-                    System.out.println(arena.getShipAt(this.getCoord().getX(), this.getCoord().getY()+1));
                     this.move(arena, yDir);
-                    System.out.println(this.getCoord());
                     start = this.getCoord();
                 } else {
                     yDir = null;
@@ -130,7 +110,6 @@ public class HiveShip extends Ship {
             if (noValidMove) {
                 break;
             }
-            System.out.println("Loop in line 124: " + xDir + " " + yDir + " " + this.getRemainingMoves());
         }
     }
     
@@ -165,6 +144,26 @@ public class HiveShip extends Ship {
         int xDiff = Math.abs(end.getX() - start.getX());
         int yDiff = Math.abs(end.getY() - start.getY());
         return xDiff + yDiff - 1;
+    }
+    
+    public static class LostWillToFightException extends Exception {
+        
+        private String message;
+        
+        public LostWillToFightException(String message) {
+            super(message);
+            this.message = message;
+        }
+        
+        public String getMessage() {
+            return this.message;
+        }
+        
+        @Override
+        public String toString() {
+            return "LostWillToFightException: " + this.getMessage();
+        }
+        
     }
     
 }
