@@ -33,6 +33,7 @@ public class HiveShip extends Ship {
             Coord coord = target.getCoord();
             while (!target.isSunk() && this.getRemainingShots() > 0){
                 this.fire(arena, coord.getX(), coord.getY());
+                System.out.println("Loop in line 36.");
             }
             target = this.getNextTarget(arena);
         }
@@ -99,12 +100,13 @@ public class HiveShip extends Ship {
                 xDir = xDiff > 0 ? Direction.EAST : Direction.WEST;
             }
             if (yMag > this.getRange()) {
-                yDir = yDiff >0 ? Direction.SOUTH : Direction.NORTH;
+                yDir = yDiff > 0 ? Direction.SOUTH : Direction.NORTH;
             }
             if (xDir != null) {
                 boolean xFree = this.canMoveInDirection(arena, start, xDir);
                 if (xFree) {
                     this.move(arena, xDir);
+                    start = this.getCoord();
                 } else {
                     xDir = null;
                 }
@@ -112,14 +114,23 @@ public class HiveShip extends Ship {
             if (yDir != null) {
                 boolean yFree = this.canMoveInDirection(arena, start, yDir);
                 if (yFree) {
+                    System.out.println(this.getCoord());
+                    System.out.println(yDir + " " + this);
+                    System.out.println(arena.getShipAt(this.getCoord().getX(), this.getCoord().getY()+1));
                     this.move(arena, yDir);
+                    System.out.println(this.getCoord());
+                    start = this.getCoord();
                 } else {
                     yDir = null;
                 }
             }
-            boolean madeValidMove = xDir != null || yDir != null;
             notCloseEnough = !arena.isInRange(this, target);
-            canMove = this.getRemainingMoves() > 0 && madeValidMove;
+            canMove = this.getRemainingMoves() > 0;
+            boolean noValidMove = xDir == null && yDir == null;
+            if (noValidMove) {
+                break;
+            }
+            System.out.println("Loop in line 124: " + xDir + " " + yDir + " " + this.getRemainingMoves());
         }
     }
     
@@ -133,7 +144,7 @@ public class HiveShip extends Ship {
                 isFree = canMoveToSpace(arena, start.getX() + 1, start.getY());
                 break;
             case SOUTH:
-                isFree = canMoveToSpace(arena, start.getX(), start.getY() - 1);
+                isFree = canMoveToSpace(arena, start.getX(), start.getY() + 1);
                 break;
             case WEST:
                 isFree = canMoveToSpace(arena, start.getX() - 1, start.getY());
