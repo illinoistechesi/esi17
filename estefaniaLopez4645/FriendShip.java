@@ -45,7 +45,12 @@ public class FriendShip extends Ship {
                 Coord coord = ship.getCoord();
                 int x = coord.getX();
                 int y = coord.getY();
-                 this.fire(arena, x, y);
+                if(this.getRemainingShots()>0 && arena.isInRange(this, ship ) ){
+                    int totalHealth=ship.getHealth();
+                   for(int j=0; j<totalHealth; j++){ 
+                         this.fire(arena, x, y);
+                   }
+                }
        
                /* if(!arena.isInRange(this, ship ))
                 {
@@ -61,7 +66,7 @@ public class FriendShip extends Ship {
   
                 }
         */
-         this.fire(arena, x, y);
+               
 
             }
 
