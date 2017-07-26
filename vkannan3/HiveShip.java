@@ -12,10 +12,10 @@ public class HiveShip extends Ship {
     public HiveShip() {
         this.initializeName("Hive Ship");
         this.initializeOwner("Vinesh");
-        this.initializeHull(3);
+        this.initializeHull(2);
         this.initializeFirepower(2);
-        this.initializeSpeed(3);
-        this.initializeRange(2);
+        this.initializeSpeed(2);
+        this.initializeRange(4);
     }
     
     //public static List<Ship> targets = new ArrayList<Ship>();
@@ -27,6 +27,8 @@ public class HiveShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+        //System.out.println("\n");
+        //System.out.println("I am at " + this.getCoord());
         Ship target = this.getNextTarget(arena);
         if (target != null) {
             this.moveTowards(arena, target);
@@ -35,6 +37,7 @@ public class HiveShip extends Ship {
                 this.fire(arena, coord.getX(), coord.getY());
             }
         }
+        //System.out.println(String.format("%s target ship!", target.isSunk() ? "Sunk": "Did not sink"));
     }
     
     public void moveTowards(Arena arena, Ship target) {
@@ -47,37 +50,57 @@ public class HiveShip extends Ship {
             int yDiff = end.getY() - start.getY();
             int xMag = Math.abs(xDiff);
             int yMag = Math.abs(yDiff);
-            Direction dir = null;
+            Direction xDir = null;
+            Direction yDir = null;
             if (xMag > this.getRange()) {
-                dir = xDiff > 0 ? Direction.EAST : Direction.WEST;
-            } else if (yMag > this.getRange()) {
-                dir = yDiff >0 ? Direction.SOUTH : Direction.NORTH;
+                xDir = xDiff > 0 ? Direction.EAST : Direction.WEST;
             }
-            if (dir != null) {
-                boolean isFree = false;
-                switch (dir) {
-                    case NORTH:
-                        isFree = checkSpace(arena, start.getX(), start.getY() - 1);
-                        break;
-                    case EAST:
-                        isFree = checkSpace(arena, start.getX() + 1, start.getY());
-                        break;
-                    case SOUTH:
-                        isFree = checkSpace(arena, start.getX(), start.getY() - 1);
-                        break;
-                    case WEST:
-                        isFree = checkSpace(arena, start.getX() - 1, start.getY());
-                        break;
-                    default:
-                        break;
-                }
-                if (isFree) {
-                    this.move(arena, dir);   
+            if (yMag > this.getRange()) {
+                yDir = yDiff >0 ? Direction.SOUTH : Direction.NORTH;
+            }
+            if (xDir != null) {
+                boolean xFree = this.checkDirection(arena, start, xDir);
+                if (xFree) {
+                    this.move(arena, xDir);
+                } else {
+                    //System.out.println("Can't move " + xDir);
+                    xDir = null;
                 }
             }
+            if (yDir != null) {
+                boolean yFree = this.checkDirection(arena, start, yDir);
+                if (yFree) {
+                    this.move(arena, yDir);
+                } else {
+                    //System.out.println("Can't move " + yDir);
+                    yDir = null;
+                }
+            }
+            boolean madeValidMove = xDir != null || yDir != null;
             notCloseEnough = !arena.isInRange(this, target);
-            canMove = this.getRemainingMoves() > 0;
+            canMove = this.getRemainingMoves() > 0 && madeValidMove;
         }
+    }
+    
+    public boolean checkDirection(Arena arena, Coord start, Direction dir) {
+        boolean isFree = false;
+        switch (dir) {
+            case NORTH:
+                isFree = checkSpace(arena, start.getX(), start.getY() - 1);
+                break;
+            case EAST:
+                isFree = checkSpace(arena, start.getX() + 1, start.getY());
+                break;
+            case SOUTH:
+                isFree = checkSpace(arena, start.getX(), start.getY() - 1);
+                break;
+            case WEST:
+                isFree = checkSpace(arena, start.getX() - 1, start.getY());
+                break;
+            default:
+                break;
+        }
+        return isFree;
     }
     
     public boolean checkSpace(Arena arena, int x, int y) {
@@ -95,6 +118,18 @@ public class HiveShip extends Ship {
                 target = ship;
                 break;
             }
+        }
+        if (target != null) {
+            //System.out.println("Locked on to a target at " + target.getCoord());
+            int d = this.getArenaDistanceBetween(this, target);
+            int s = this.getSpeed();
+            int r = this.getRange();
+            int t = s + r;
+            //System.out.println(String.format("Target is %d away: %d + %d = %d", d, s, r, t));
+            int diff = d - t;
+            //System.out.println("Diff: " + diff);
+        } else {
+            //System.out.println("No targets to lock onto.");
         }
         return target;
     }
