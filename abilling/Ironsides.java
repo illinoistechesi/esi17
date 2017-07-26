@@ -25,7 +25,7 @@ public class Ironsides extends Ship {
     @Override
     public void doTurn(Arena arena) {
         int minHealth=100;
-        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.WEST);
         Ship target = null;
      List<Ship> nearby = this.getNearbyShips(arena);
      for (int i = 0; i < nearby.size(); i++) {

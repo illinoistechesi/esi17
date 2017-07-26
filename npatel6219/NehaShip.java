@@ -26,7 +26,7 @@ public class NehaShip extends Ship {
     public void doTurn(Arena arena) {
         // Fill in your strategy here
        int minHealth = 100;
-       this.move(arena, Direction.EAST);
+       this.move(arena, Direction.WEST);
        Ship target = null;
        List<Ship> nearby = this.getNearbyShips(arena);
        for (int i = 0; i < nearby.size(); i++) {

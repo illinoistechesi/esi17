@@ -1,6 +1,7 @@
 package esi17.vkannan3;
 import battleship.core.*;
 import java.util.List;
+import java.util.ArrayList;
 
 /*
  * Vinesh
@@ -28,7 +29,7 @@ public class KrakenShip extends Ship {
     }
     
     
-    public List<Ship> getAllEnemyShips(arena) {
+    public List<Ship> getAllEnemyShips(Arena arena) {
         List<Ship> res = new ArrayList<Ship>();
         for (Ship ship : arena.getAllShips()) {
             if (!ship.isSameTeamAs(this)) {

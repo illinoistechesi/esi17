@@ -26,7 +26,7 @@ public class Maverick extends Ship {
     public void doTurn(Arena arena) {
         // Fill in your strategy here
         int minHealth = 100;
-        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.WEST);
         Ship target = null;
         
         //Checking for nearby ships
@@ -78,7 +78,7 @@ public class Maverick extends Ship {
             this.fire(arena, x,y); 
         }
         else {
-            this.move(arena, Direction.EAST);
+            this.move(arena, Direction.WEST);
         }    
             
                           
