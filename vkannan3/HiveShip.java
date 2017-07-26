@@ -1,24 +1,24 @@
 package esi17.vkannan3;
 import battleship.core.*;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
 /*
- * Vinesh
- * @author Your Name
+ * Hive Ship
+ * @author Vinesh
  */
 public class HiveShip extends Ship {
     
     public HiveShip() {
         this.initializeName("Hive Ship");
-        this.initializeOwner("Vinesh");
+        this.initializeOwner("The Evil Fleet");
         this.initializeHull(2);
         this.initializeFirepower(2);
         this.initializeSpeed(2);
         this.initializeRange(4);
     }
-    
-    //public static List<Ship> targets = new ArrayList<Ship>();
     
     /*
      * Determines what actions the ship will take on a given turn
@@ -27,20 +27,63 @@ public class HiveShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        //System.out.println("\n");
-        //System.out.println("I am at " + this.getCoord());
         Ship target = this.getNextTarget(arena);
-        if (target != null) {
-            this.moveTowards(arena, target);
-            for (int f = 0; f < this.getFirepower(); f++) {
-                Coord coord = target.getCoord();
+        while (target != null && this.getRemainingShots() > 0) {
+            this.approachTarget(arena, target);
+            Coord coord = target.getCoord();
+            while (!target.isSunk() && this.getRemainingShots() > 0){
                 this.fire(arena, coord.getX(), coord.getY());
             }
+            target = this.getNextTarget(arena);
         }
-        //System.out.println(String.format("%s target ship!", target.isSunk() ? "Sunk": "Did not sink"));
     }
     
-    public void moveTowards(Arena arena, Ship target) {
+    public Ship getNextTarget(Arena arena) {
+        Ship target = null;
+        List<Ship> options = new ArrayList<Ship>();
+        for (Ship ship : this.getAllEnemyShips(arena)) {
+            int dist = HiveShip.getArenaDistanceBetween(this, ship);
+            int reach = this.getRemainingMoves() + this.getRange();
+            boolean isAlive = !ship.isSunk();
+            boolean canReach = reach >= dist;
+            if (isAlive && canReach) {
+                options.add(ship);
+            }
+        }
+        Ship self = this;
+        Collections.sort(options, new Comparator<Ship>() {
+            public int compare(Ship s1, Ship s2) {
+                int comparison = 0;
+                int d1 = HiveShip.getArenaDistanceBetween(self, s1);
+                int d2 = HiveShip.getArenaDistanceBetween(self, s2);
+                int diff = d1 - d2;
+                if (diff == 0) {
+                    int h1 = s1.getHealth();
+                    int h2 = s2.getHealth();
+                    comparison = h1 - h2;
+                } else {
+                    comparison = diff;
+                }
+                return comparison;
+            } 
+        });
+        if (options.size() > 0) {
+            target = options.get(0);
+        }
+        return target;
+    }
+    
+    public List<Ship> getAllEnemyShips(Arena arena) {
+        List<Ship> res = new ArrayList<Ship>();
+        for (Ship ship : arena.getAllShips()) {
+            if (!ship.isSameTeamAs(this)) {
+                res.add(ship);
+            }
+        }
+        return res;
+    }
+    
+    public void approachTarget(Arena arena, Ship target) {
         boolean notCloseEnough = !arena.isInRange(this, target);
         boolean canMove = this.getRemainingMoves() > 0;
         while (notCloseEnough && canMove) {
@@ -59,20 +102,18 @@ public class HiveShip extends Ship {
                 yDir = yDiff >0 ? Direction.SOUTH : Direction.NORTH;
             }
             if (xDir != null) {
-                boolean xFree = this.checkDirection(arena, start, xDir);
+                boolean xFree = this.canMoveInDirection(arena, start, xDir);
                 if (xFree) {
                     this.move(arena, xDir);
                 } else {
-                    //System.out.println("Can't move " + xDir);
                     xDir = null;
                 }
             }
             if (yDir != null) {
-                boolean yFree = this.checkDirection(arena, start, yDir);
+                boolean yFree = this.canMoveInDirection(arena, start, yDir);
                 if (yFree) {
                     this.move(arena, yDir);
                 } else {
-                    //System.out.println("Can't move " + yDir);
                     yDir = null;
                 }
             }
@@ -82,20 +123,20 @@ public class HiveShip extends Ship {
         }
     }
     
-    public boolean checkDirection(Arena arena, Coord start, Direction dir) {
+    public boolean canMoveInDirection(Arena arena, Coord start, Direction dir) {
         boolean isFree = false;
         switch (dir) {
             case NORTH:
-                isFree = checkSpace(arena, start.getX(), start.getY() - 1);
+                isFree = canMoveToSpace(arena, start.getX(), start.getY() - 1);
                 break;
             case EAST:
-                isFree = checkSpace(arena, start.getX() + 1, start.getY());
+                isFree = canMoveToSpace(arena, start.getX() + 1, start.getY());
                 break;
             case SOUTH:
-                isFree = checkSpace(arena, start.getX(), start.getY() - 1);
+                isFree = canMoveToSpace(arena, start.getX(), start.getY() - 1);
                 break;
             case WEST:
-                isFree = checkSpace(arena, start.getX() - 1, start.getY());
+                isFree = canMoveToSpace(arena, start.getX() - 1, start.getY());
                 break;
             default:
                 break;
@@ -103,53 +144,16 @@ public class HiveShip extends Ship {
         return isFree;
     }
     
-    public boolean checkSpace(Arena arena, int x, int y) {
+    public boolean canMoveToSpace(Arena arena, int x, int y) {
         return arena.getShipAt(x, y) == null;
     }
     
-    public Ship getNextTarget(Arena arena) {
-        Ship target = null;
-        for (Ship ship : this.getAllEnemyShips(arena)) {
-            int dist = this.getArenaDistanceBetween(this, ship);
-            int reach = this.getSpeed() + this.getRange();
-            boolean isAlive = !ship.isSunk();
-            boolean canReach = reach >= dist;
-            if (isAlive && canReach) {
-                target = ship;
-                break;
-            }
-        }
-        if (target != null) {
-            //System.out.println("Locked on to a target at " + target.getCoord());
-            int d = this.getArenaDistanceBetween(this, target);
-            int s = this.getSpeed();
-            int r = this.getRange();
-            int t = s + r;
-            //System.out.println(String.format("Target is %d away: %d + %d = %d", d, s, r, t));
-            int diff = d - t;
-            //System.out.println("Diff: " + diff);
-        } else {
-            //System.out.println("No targets to lock onto.");
-        }
-        return target;
-    }
-    
-    public int getArenaDistanceBetween(Ship a, Ship b) {
+    public static int getArenaDistanceBetween(Ship a, Ship b) {
         Coord start = a.getCoord();
         Coord end = b.getCoord();
         int xDiff = Math.abs(end.getX() - start.getX());
         int yDiff = Math.abs(end.getY() - start.getY());
         return xDiff + yDiff - 1;
-    }
-    
-    public List<Ship> getAllEnemyShips(Arena arena) {
-        List<Ship> res = new ArrayList<Ship>();
-        for (Ship ship : arena.getAllShips()) {
-            if (!ship.isSameTeamAs(this)) {
-                res.add(ship);
-            }
-        }
-        return res;
     }
     
 }
