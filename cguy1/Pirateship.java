@@ -12,9 +12,9 @@ public class Pirateship extends Ship {
         this.initializeName("Pirateship");
         this.initializeOwner("cguy1");
         this.initializeHull(3);
-        this.initializeFirepower(3);
-        this.initializeSpeed(1);
-        this.initializeRange(3);
+        this.initializeFirepower(2);
+        this.initializeSpeed(3);
+        this.initializeRange(2);
     }
     
     /*
@@ -24,7 +24,7 @@ public class Pirateship extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        this.move(arena, Direction.WEST);
+        this.move(arena, Direction.NORTH);
       
         List<Ship> nearby = this.getNearbyShips(arena);
         for (int i = 0; i < nearby.size(); i++) {
@@ -39,7 +39,9 @@ public class Pirateship extends Ship {
                 int x = coord.getX();
                 int y = coord.getY();
                 
+                for(int j=0; j<2; j++){
                 this.fire(arena, x, y);
+            }
                
             }
         }
