@@ -11,10 +11,10 @@ public class Ironsides extends Ship {
     public Ironsides() {
         this.initializeName("Ironsides");
         this.initializeOwner("Ali Billing");
-        this.initializeHull(4);
+        this.initializeHull(2);
         this.initializeFirepower(2);
-        this.initializeSpeed(2);
-        this.initializeRange(2);
+        this.initializeSpeed(3);
+        this.initializeRange(3);
     }
     
     /*
