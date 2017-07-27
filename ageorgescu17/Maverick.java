@@ -11,10 +11,10 @@ public class Maverick extends Ship {
     public Maverick() {
         this.initializeName("Maverick");
         this.initializeOwner("Adriana");
-        this.initializeHull(4);
+        this.initializeHull(2);
         this.initializeFirepower(2);
-        this.initializeSpeed(2);
-        this.initializeRange(2);
+        this.initializeSpeed(3);
+        this.initializeRange(3);
     }
     
     /*
@@ -26,7 +26,11 @@ public class Maverick extends Ship {
     public void doTurn(Arena arena) {
         // Fill in your strategy here
         int minHealth = 100;
+<<<<<<< HEAD
         this.move(arena, Direction.WEST);
+=======
+        this.move(arena, Direction.NORTH);
+>>>>>>> 2692b16ac9a64723ed7816313407754dffa2c0b0
         Ship target = null;
         
         //Checking for nearby ships
@@ -39,6 +43,8 @@ public class Maverick extends Ship {
             if (theirTeam.equals(myTeam)){
             } 
             else{
+                
+            
                 
                 if (ship.getHealth() < minHealth){
                      target = ship;
@@ -78,7 +84,11 @@ public class Maverick extends Ship {
             this.fire(arena, x,y); 
         }
         else {
+<<<<<<< HEAD
             this.move(arena, Direction.WEST);
+=======
+            this.move(arena, Direction.NORTH);
+>>>>>>> 2692b16ac9a64723ed7816313407754dffa2c0b0
         }    
             
                           
