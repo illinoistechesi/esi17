@@ -24,7 +24,7 @@ public class Mars extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.WEST);
        // Get all nearby ships
     List<Ship> nearby = this.getNearbyShips(arena);
 // Loop over all the ships
