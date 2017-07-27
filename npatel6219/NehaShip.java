@@ -38,7 +38,7 @@ public class NehaShip extends Ship {
           } else {
              if (ship.getHealth() < minHealth) {//(ship.getName().equals("HiveShip")) {
                  target=ship;
-                 //minHealth = ship.getHealth();
+                 minHealth = ship.getHealth();
              }
           }
        }
