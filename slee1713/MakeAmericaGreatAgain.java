@@ -11,10 +11,10 @@ public class MakeAmericaGreatAgain extends Ship {
     public MakeAmericaGreatAgain() {
         this.initializeName("Make America Great Again");
         this.initializeOwner("Your Name");
-        this.initializeHull(2);
+        this.initializeHull(6);
         this.initializeFirepower(2);
-        this.initializeSpeed(1);
-        this.initializeRange(5);
+        this.initializeSpeed(0);
+        this.initializeRange(2);
     }
     
     /*
@@ -42,18 +42,18 @@ public class MakeAmericaGreatAgain extends Ship {
          this.fire(arena, 9, 1);
         }
     }
-         Coord me = this.getCoord();
+       Coord me = this.getCoord();
     int a = me.getX();
     int b = me.getY();
     
     
-    if (a > 9) {
-        this.move(arena, Direction.WEST);
+    //if (b > 0) {
+      //  this.move(arena, Direction.NORTH);
         
-    }
-    else if (a < 9) {
-        this.move(arena, Direction.EAST);
-    }
+    //}
+    //else if (b < 0) {
+        this.move(arena, Direction.SOUTH); 
+   //}
        // this.move(arena, Direction.EAST);
         //int i = arena.getRandom().nextInt(10);
     /*(int i = 0; i < nearby.size(); i++); { 
