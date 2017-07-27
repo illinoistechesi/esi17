@@ -11,10 +11,10 @@ public class AquafreezeShip extends Ship {
     public AquafreezeShip() {
         this.initializeName("AquafreezeShip");
         this.initializeOwner("aquafreeze");
-        this.initializeHull(3);
-        this.initializeFirepower(2);
+        this.initializeHull(4);
+        this.initializeFirepower(3);
         this.initializeSpeed(1);
-        this.initializeRange(4);
+        this.initializeRange(2);
     }
     
     /*
@@ -26,10 +26,9 @@ public class AquafreezeShip extends Ship {
     public void doTurn(Arena arena) {
         // Fill in your strategy here
         List<Ship> nearby = this.getNearbyShips(arena);
-        if(nearby.size()==0)
-     this.move(arena, Direction.SOUTH);
-     this.move(arena, Direction.SOUTH);
-     this.move(arena, Direction.SOUTH);
+     this.move(arena, Direction.EAST);
+     this.move(arena, Direction.EAST);
+     this.move(arena, Direction.EAST);
     /*
  * Example of how not to shoot your teammates
  */
@@ -60,4 +59,5 @@ for (int i = 0; i < nearby.size(); i++) {
   
     
 }
+
 
