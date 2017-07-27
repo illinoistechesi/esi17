@@ -11,10 +11,10 @@ public class Ironsides extends Ship {
     public Ironsides() {
         this.initializeName("Ironsides");
         this.initializeOwner("Ali Billing");
-        this.initializeHull(4);
+        this.initializeHull(2);
         this.initializeFirepower(2);
-        this.initializeSpeed(2);
-        this.initializeRange(2);
+        this.initializeSpeed(3);
+        this.initializeRange(3);
     }
     
     /*
@@ -25,7 +25,7 @@ public class Ironsides extends Ship {
     @Override
     public void doTurn(Arena arena) {
         int minHealth=100;
-        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.WEST);
         Ship target = null;
      List<Ship> nearby = this.getNearbyShips(arena);
      for (int i = 0; i < nearby.size(); i++) {
