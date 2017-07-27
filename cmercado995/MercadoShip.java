@@ -13,9 +13,9 @@ public class MercadoShip extends Ship {
     public MercadoShip() {
         this.initializeName("Mercado Ship");
         this.initializeOwner("Christian Mercado");
-        this.initializeHull(2);
-        this.initializeFirepower(2);
-        this.initializeSpeed(3);
+        this.initializeHull(4);
+        this.initializeFirepower(3);
+        this.initializeSpeed(0);
         this.initializeRange(3);
     }
     /*
@@ -59,12 +59,6 @@ public class MercadoShip extends Ship {
                 this.fire(arena, enemyX, enemyY);
                 if(this.getRemainingShots() == 0) break;
             }
-                
-            
-            // Gives me my Coordinates as integers
-            Coord myCoord = this.getCoord();
-            int MyX = myCoord.getX();
-            int MyY = myCoord.getY();
             
             // Literally copy-pasted to get around "getNearbyShips" being protected lol
             /*** Academic Dishonesty ***/
