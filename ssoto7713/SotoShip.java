@@ -11,10 +11,10 @@ public class SotoShip extends Ship {
     public SotoShip() {
         this.initializeName("SotoShip");
         this.initializeOwner("Soto");
-        this.initializeHull(2);
-        this.initializeFirepower(2);
-        this.initializeSpeed(1);
-        this.initializeRange(5);
+        this.initializeHull(1);
+        this.initializeFirepower(3);
+        this.initializeSpeed(3);
+        this.initializeRange(3);
     }
     
     /*
@@ -25,41 +25,51 @@ public class SotoShip extends Ship {
     @Override
     public void doTurn(Arena arena) {
         // Fill in your strategy here
-           Coord me = this.getCoord();
-    int a = me.getX();
-    int b = me.getY();
-    
-    
-    if (a < 4) {
-        this.move(arena, Direction.EAST);
+ List<Ship> nearby = this.getNearbyShips(arena);
         
-    }
-    else if (a > 4) {
-        this.move(arena, Direction.WEST);
-    }
-    
-        //gets neaby enemies
-        List<Ship> nearby = this.getNearbyShips(arena);
-// Loop over all the ships
-for (int i = 0; i < nearby.size(); i++) {
-    Ship ship = nearby.get(i);
-    // Call the getTeam() method on any ship to get its team name
-    String myTeam = this.getTeam();
-    String theirTeam = ship.getTeam();
-    // To compare Strings, we have to use the special .equals() method
-    // It will return true if the strings are equal and false if they are not
-    if (theirTeam.equals(myTeam)) {
-        // Don't shoot!
-    } else {
-        // In the new version of battleship, you can get any ship's coordinate, even if it is out of your range
-        // But, snce we used getNearbyShips(), all ships in this loop are in range
-        Coord coord = ship.getCoord();
-        int x = coord.getX();
-        int y = coord.getY();
-        // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
-        this.fire(arena, x, y);
-        this.fire(arena, x, y);
-    }
+        for (int i = 0; i < nearby.size(); i++) {
+            
+            Ship ship = nearby.get(i);
+            
+            String myTeam = this.getTeam();
+            String theirTeam = ship.getTeam();
+            // for (Ship ship : nearby) {
+            // System.out.println("One nearby ship has " + ship.getHealth() + " HP left.");
+                    Coord enem = ship.getCoord();
+                    Coord coord = this.getCoord();
+                    int x = enem.getX();
+                    int y = enem.getY();            
+            if (theirTeam.equals(myTeam)) {
+                //NOTHING
+            }   else {
+                
+
+                    int HP = ship.getHealth();
+                    int SPD = ship.getSpeed();
+                    int RAN = ship.getRange();
+                    int ATK = ship.getFirepower();
+                    
+                    
+                    
+                    
+              
+                    
+                
+                    //This matches up the nearby ship with the Queen’s direct stats.
+                    if(HP == 3 && SPD == 0 && RAN == 3 && ATK == 4){
+                        this.fire(arena, x, y);
+                        this.fire(arena, x, y);
+                        this.fire(arena, x, y);
+                    }
+                    
+                
+                    
+                    
+                    
+                    
+                }
+
+
 }
 }
 }
