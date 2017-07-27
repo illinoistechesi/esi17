@@ -11,10 +11,10 @@ public class Dolphin20Ship extends Ship {
     public Dolphin20Ship() {
         this.initializeName("Dolphin20 Ship");
         this.initializeOwner("Jovany Soto");
-        this.initializeHull(4);
-        this.initializeFirepower(3);
-        this.initializeSpeed(1);
-        this.initializeRange(2);
+        this.initializeHull(3);
+        this.initializeFirepower(4);
+        this.initializeSpeed(2);
+        this.initializeRange(1);
     }
     
     /*
@@ -50,6 +50,7 @@ for (int i = 0; i < nearby.size(); i++) {
         int y = coord.getY();
         // If you run out of firepower on a turn, you can still call fire(), but your ship won't actually fire
         this.fire(arena, x, y);
+        
     }
 }
        
