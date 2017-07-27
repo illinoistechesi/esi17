@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class QueenShip extends Ship {
     
+    private boolean inSuicideProtocol = false;
+    
     public QueenShip() {
         this.initializeName("Queen Ship");
         this.initializeOwner("The Evil Fleet");
@@ -27,16 +29,23 @@ public class QueenShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
-        for (Ship ship : QueenShip.getAllEnemyShips(arena, this)) {
-            boolean canFire = this.getRemainingShots() > 0;
-            boolean inRange = arena.isInRange(this, ship);
-            if (canFire && inRange) {
-                boolean targetIsAlive = !ship.isSunk();
-                Coord coord = ship.getCoord();
-                while (canFire && targetIsAlive) {
-                    this.fire(arena, coord.getX(), coord.getY());
-                    canFire = this.getRemainingShots() > 0;
-                    targetIsAlive = !ship.isSunk();
+        if (arena.getTurn() < 2 && this.inSuicideProtocol) {
+            for (int s = 0; s < this.getHealth(); s++) {
+                Coord self = this.getCoord();
+                this.fire(arena, self.getX(), self.getY());
+            }
+        } else {
+            for (Ship ship : QueenShip.getAllEnemyShips(arena, this)) {
+                boolean canFire = this.getRemainingShots() > 0;
+                boolean inRange = arena.isInRange(this, ship);
+                if (canFire && inRange) {
+                    boolean targetIsAlive = !ship.isSunk();
+                    Coord coord = ship.getCoord();
+                    while (canFire && targetIsAlive) {
+                        this.fire(arena, coord.getX(), coord.getY());
+                        canFire = this.getRemainingShots() > 0;
+                        targetIsAlive = !ship.isSunk();
+                    }
                 }
             }
         }

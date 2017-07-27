@@ -49,6 +49,10 @@ public class HiveShip extends Ship {
             }
         } catch (LostWillToFightException lwtfe) {
             System.out.println(lwtfe);
+            for (int s = 0; s < this.getHealth(); s++) {
+                Coord self = this.getCoord();
+                this.fire(arena, self.getX(), self.getY());
+            }
         }
     }
     
