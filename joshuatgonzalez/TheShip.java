@@ -11,9 +11,9 @@ public class TheShip extends Ship {
     public TheShip() {
         this.initializeName("TheShip");
         this.initializeOwner("Joshua Gonzalez");
-        this.initializeHull(6);
-        this.initializeFirepower(2);
-        this.initializeSpeed(1);
+        this.initializeHull(4);
+        this.initializeFirepower(1);
+        this.initializeSpeed(4);
         this.initializeRange(1);
         
     }
