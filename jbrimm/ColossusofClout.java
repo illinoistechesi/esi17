@@ -11,8 +11,8 @@ public class ColossusofClout extends Ship {
     public ColossusofClout() {
         this.initializeName("ColossusofClout");
         this.initializeOwner("jbrimm");
-        this.initializeHull(2);       //HEALTH
-        this.initializeFirepower(3); //POWER
+        this.initializeHull(3);       //HEALTH
+        this.initializeFirepower(2); //POWER
         this.initializeSpeed(1);     //SPEED
         this.initializeRange(4);    //RANGE
     }
@@ -27,8 +27,8 @@ public class ColossusofClout extends Ship {
     //Fill in strategy here
     
     
-      this.move(arena, Direction.WEST); 
-
+      this.move(arena, Direction.NORTH); 
+      
     List<Ship> nearby = this.getNearbyShips(arena);
     
     for (int i = 0; i < nearby.size(); i++) 
