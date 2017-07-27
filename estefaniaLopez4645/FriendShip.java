@@ -11,9 +11,9 @@ public class FriendShip extends Ship {
     public FriendShip() {
         this.initializeName("FriendShip");
         this.initializeOwner("Your Name");
-        this.initializeHull(4);
+        this.initializeHull(1);
         this.initializeFirepower(3);
-        this.initializeSpeed(0);
+        this.initializeSpeed(3);
         this.initializeRange(3);
     }
     
@@ -26,10 +26,10 @@ public class FriendShip extends Ship {
     public void doTurn(Arena arena) {
         
         this.move(arena, Direction.EAST);
-        this.move(arena, Direction.SOUTH);
+        //this.move(arena, Direction.SOUTH);
         
  
-        List<Ship> alive= arena.getAllShips();
+        List<Ship> alive= this.getNearbyShips(arena);
         for (int i = 0; i < alive.size(); i++) {
             Ship ship = alive.get(i);
             // Call the getTeam() method on any ship to get its team name
@@ -51,22 +51,6 @@ public class FriendShip extends Ship {
                          this.fire(arena, x, y);
                    }
                 }
-       
-               /* if(!arena.isInRange(this, ship ))
-                {
-                     Coord my= this.getCoord();
-                     int myx = my.getX();
-          
-                     if(myx<x)
-                        this.move(arena, Direction.EAST);
-        
-                }
-                if(arena.isInRange(this, ship )){
-                   this.fire(arena, x, y);
-  
-                }
-        */
-               
 
             }
 
