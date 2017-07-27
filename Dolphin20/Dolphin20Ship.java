@@ -54,29 +54,5 @@ for (int i = 0; i < nearby.size(); i++) {
 }
        
        
-    
-        
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.EAST);
-        List<Ship> nearby2 = this.getNearbyShips(arena);
-        
-        if (nearby.size() > 0) {
-           Ship first = nearby2.get(0);
-        
-           Coord coord =this.getShipCoord(arena, first);
-           int x = coord.getX();
-           int y = coord.getY();
-           
-          this.fire(arena, x, y);
-          //this.move(arena, Direc
-        } // Forgot this curly brace
-        
-        
-        
-        
-        
-        
-        
     }
 }
