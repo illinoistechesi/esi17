@@ -11,9 +11,9 @@ public class RoldanShip extends Ship {
     public RoldanShip() {
         this.initializeName(" RoldanShip");
         this.initializeOwner("Tony");
-        this.initializeHull(2);
+        this.initializeHull(3);
         this.initializeFirepower(2);
-        this.initializeSpeed(3);
+        this.initializeSpeed(2);
         this.initializeRange(3);
     }
     
@@ -26,8 +26,15 @@ public class RoldanShip extends Ship {
     public void doTurn(Arena arena) {
         // FIll in your strategy here
         
-         this.move(arena, Direction.SOUTH);
+            this.move(arena, Direction.WEST);
         List<Ship> nearby = this.getNearbyShips(arena);
+        // Loop over all the ships
+        for (int i = 0; i < nearby.size(); i++) {
+            Ship ship = nearby.get(i);
+        String myTeam = this.getTeam();
+        String theirTeam = ship.getTeam();
+        if (theirTeam.equals(myTeam))
+        
         if (nearby.size() > 0) {
             Ship first = nearby.get(0);
             Coord coord = this.getShipCoord(arena, first);
@@ -37,4 +44,5 @@ public class RoldanShip extends Ship {
             this.fire(arena, x, y);
             }
         }
+    }
     }
