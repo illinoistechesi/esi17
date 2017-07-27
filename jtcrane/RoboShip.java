@@ -11,10 +11,10 @@ public class RoboShip extends Ship {
     public RoboShip() {
         this.initializeName("Robo Ship");
         this.initializeOwner("Jalen Crane");
-        this.initializeHull(1);
-        this.initializeFirepower(4);
-        this.initializeSpeed(1);
-        this.initializeRange(4);
+        this.initializeHull(2);
+        this.initializeFirepower(3);
+        this.initializeSpeed(2);
+        this.initializeRange(3);
     }
     
     /*
@@ -24,6 +24,9 @@ public class RoboShip extends Ship {
      */
     @Override
     public void doTurn(Arena arena) {
+           this.move(arena, Direction.SOUTH);
+        if (this.getRemainingMoves() > 0) {
+    this.move(arena, Direction.WEST);
     /*List<Ship> nearby = nearby.get(0);
     Coord coord = this.getShipCoord()
     int x = coord.getX();
@@ -76,10 +79,11 @@ for (int i = 0; i < nearby.size(); i++) {
             }
 } 
         // Fill in your strategy here
-        
+     
         
             
         
     }
     
+}
 }
