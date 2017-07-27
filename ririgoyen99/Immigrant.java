@@ -11,10 +11,10 @@ public class Immigrant extends Ship {
     public Immigrant() {
         this.initializeName("Immigrant");
         this.initializeOwner("ririgoyen99");
-        this.initializeHull(6);
+        this.initializeHull(4);
         this.initializeFirepower(2);
-        this.initializeSpeed(1);
-        this.initializeRange(1);
+        this.initializeSpeed(2);
+        this.initializeRange(2);
     }
     
     /*
@@ -24,13 +24,8 @@ public class Immigrant extends Ship {
      */
     @Override
    public void doTurn(Arena arena) {
-        this.move(arena, Direction.EAST);
         this.move(arena, Direction.NORTH);
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.EAST);
-        this.move(arena, Direction.EAST);
+        this.move(arena, Direction.NORTH);
         List<Ship> nearby = this.getNearbyShips(arena);
         for (int i = 0; i < nearby.size(); i++) {
         Ship ship = nearby.get(i);
