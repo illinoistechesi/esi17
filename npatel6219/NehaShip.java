@@ -11,10 +11,10 @@ public class NehaShip extends Ship {
     public NehaShip() {
         this.initializeName("Neha Ship");
         this.initializeOwner("NehaP");
-        this.initializeHull(4);
+        this.initializeHull(1);
         this.initializeFirepower(2);
-        this.initializeSpeed(2);
-        this.initializeRange(2);
+        this.initializeSpeed(3);
+        this.initializeRange(3);
     }
     
     /*
@@ -26,7 +26,7 @@ public class NehaShip extends Ship {
     public void doTurn(Arena arena) {
         // Fill in your strategy here
        int minHealth = 100;
-       this.move(arena, Direction.WEST);
+       this.move(arena, Direction.NORTH);
        Ship target = null;
        List<Ship> nearby = this.getNearbyShips(arena);
        for (int i = 0; i < nearby.size(); i++) {
@@ -36,7 +36,7 @@ public class NehaShip extends Ship {
           if (theirTeam.equals(myTeam)) {
               // Don't shoot!
           } else {
-             if (ship.getHealth() < minHealth) {
+             if (ship.getHealth() < minHealth) {//(ship.getName().equals("HiveShip")) {
                  target=ship;
                  minHealth = ship.getHealth();
              }
@@ -52,18 +52,18 @@ public class NehaShip extends Ship {
           if (myX>x) {
               this.move(arena,Direction.WEST);
           } else {
-          //if (myX <x) {
               this.move(arena,Direction.EAST);
-          } //else
+          }
           if (myY > y) {
               this.move(arena,Direction.NORTH);
           } else {
               this.move(arena,Direction.SOUTH);
           }
-            this.fire(arena, x, y);
-            this.fire(arena, x, y);
+         this.fire(arena, x, y);
+         this.fire(arena, x, y);
+        
+            
        }
-       
     
-    }
-}
+    } //end of doTurn
+}//end of main
