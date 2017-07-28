@@ -1,6 +1,8 @@
 package esi17.vkannan3;
+import esi17.vkannan3.GeneticLab;
 import battleship.core.*;
 import battleship.games.*;
+import battlehub.FinalMain;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,9 +25,11 @@ public class GeneticShip extends Ship {
             seed = Integer.parseInt(args[0]);
         }
         System.out.println("Battle Seed: " + seed);
+        // Simulation Seed 7: 1: [2, 3, 1, 4, 0, 0, 4, 1, 1] -> 11.4  1.0
         //int[] chromosome = {1, 3, 0, 6, 3, 0, 0, 1, 1};
         //int[] chromosome = {3, 3, 1, 3, 0, 0, 3, 0, 0};
-        int[] chromosome = {2, 3, 1, 4, 4, 0, 2, 1, 0};
+        //int[] chromosome = {2, 3, 1, 4, 4, 0, 2, 1, 0};
+        int[] chromosome = {2, 3, 1, 4, 0, 0, 4, 1, 1};
         CustomBattle battle = GeneticLab.runTrial(chromosome, seed);
         Arena arena = battle.getArena();
         GeneticShip geneticShip = GeneticLab.getGeneticShip(arena);
@@ -36,7 +40,7 @@ public class GeneticShip extends Ship {
         int turns = arena.getTurn();
         System.out.println("Sunk " + kills + " ships.");
         System.out.println("Survived " + survived + "/" + turns + " turns.");
-        GeneticLab.showBattleResults(battle);
+        FinalMain.showBattleResults(battle, GeneticLab.INSTRUCTOR_TEAM, GeneticLab.STUDENT_TEAM);
     }
     
     private static int[] CHROMOSOME = {2, 3, 1, 4, 4, 0, 2, 1, 0};
@@ -264,22 +268,36 @@ public class GeneticShip extends Ship {
         switch (this.getGene(PRIORITY_A_GENE)) {
             case 0: // Distance
                 priorityA = "distance";
-                priorityB = "distance";
                 break;
             case 1: // Health
                 priorityA = "health";
-                priorityB = "health";
                 break;
             case 2: // Firepower
                 priorityA = "firepower";
-                priorityB = "firepower";
                 break;
             case 3: // Speed
                 priorityA = "speed";
-                priorityB = "speed";
                 break;
             case 4: // Range
                 priorityA = "range";
+                break;
+            default:
+                break;
+        }
+        switch (this.getGene(PRIORITY_B_GENE)) {
+            case 0: // Distance
+                priorityB = "distance";
+                break;
+            case 1: // Health
+                priorityB = "health";
+                break;
+            case 2: // Firepower
+                priorityB = "firepower";
+                break;
+            case 3: // Speed
+                priorityB = "speed";
+                break;
+            case 4: // Range
                 priorityB = "range";
                 break;
             default:
