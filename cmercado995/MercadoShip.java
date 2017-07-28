@@ -1,5 +1,8 @@
 package esi17.cmercado995;
 import battleship.core.*;
+import battleship.ships.QueenShip;
+
+import java.util.ArrayList;
 import java.util.List;
 /******************************************************
  * This ship includes a lot of academic dishonesty, 
@@ -23,22 +26,8 @@ public class MercadoShip extends Ship {
      * @param arena (Arena) the battlefield for the match
      * @return void
      */
+
     @Override
-    /*
-    for(Ships ship : getAllEnemies){
-        public boolean inEnemyRange(Ship self, Ship target) {
-        	for(Ships ship : getAllEnemies){
-        		Coord st = self.getCoord();
-            	Coord ct = target.getCoord();
-            	int range = self.getRange();
-            	int[] tXRange = {ct.getX() - target.getRange(), ct.getX() + target.getRange()};
-            	int[] tYRange = {ct.getY() - target.getRange(), ct.getY() + target.getRange()};
-            	boolean inXRange = st.getX() >= tXRange[0] && st.getX() <= tXRange[1];
-            	boolean inYRange = st.getY() >= tYRange[0] && st.getY() <= tYRange[1];
-            	return inXRange && inYRange;
-        }
-    }
-    }*/
     public void doTurn(Arena arena){
         // List of Nearby Ships
         List<Ship> nearby = this.getNearbyShips(arena);
@@ -74,6 +63,36 @@ public class MercadoShip extends Ship {
                 this.fire(arena, enemyX, enemyY);
                 if(this.getRemainingShots() == 0) break;
             }
+            
+            // If in an enemy's range, move out of the range
+            // I apologize if there are too many duplicate variables, I don't understand java yet
+            boolean inEnemyRange = arena.isInRange(ship, this);
+            if(inEnemyRange){
+            	Coord enemyCoord = ship.getCoord();
+            	Coord myCoord = this.getCoord();
+            	int EnemyRange = ship.getRange();
+            	if(myCoord.getX() > enemyCoord.getX() + EnemyRange){
+            		this.move(arena, Direction.SOUTH);
+            	}else if(myCoord.getX() < enemyCoord.getX() + EnemyRange){
+            		this.move(arena, Direction.NORTH);
+            	}else if(myCoord.getY() > enemyCoord.getY() + EnemyRange){
+            		this.move(arena, Direction.EAST);
+            	}else if(myCoord.getY() < enemyCoord.getY() + EnemyRange){
+            		this.move(arena, Direction.WEST);
+            	}else if(this.getRemainingMoves() == 0) break;
+            	}else {
+            		System.out.println("What now?");
+            	}
         }
-    }
+ }
+    public boolean isInRange(Ship self, Ship target) {
+		Coord st = self.getCoord();
+		Coord ct = target.getCoord();
+		int range = self.getRange();
+		int[] sXRange = {st.getX() - range, st.getX() + range};
+		int[] sYRange = {st.getY() - range, st.getY() + range};
+		boolean inXRange = ct.getX() >= sXRange[0] && ct.getX() <= sXRange[1];
+		boolean inYRange = ct.getY() >= sYRange[0] && ct.getY() <= sYRange[1];
+		return inXRange && inYRange;
+	}
 }
