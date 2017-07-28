@@ -39,7 +39,7 @@ public class GeneticShip extends Ship {
         GeneticLab.showBattleResults(battle);
     }
     
-    private static int[] CHROMOSOME;
+    private static int[] CHROMOSOME = {2, 3, 1, 4, 4, 0, 2, 1, 0};
     private static final int[] GENE_MAX = {9, 9, 9, 9, 4, 1, 4, 1, 1};
     private static final int HULL_GENE = 0;
     private static final int FIREPOWER_GENE = 1;
@@ -116,41 +116,43 @@ public class GeneticShip extends Ship {
             }
         } else {
             List<Ship> allShips = this.getAllEnemies(arena);
-            Collections.sort(allShips, new Comparator<Ship>() {
-                public int compare(Ship s1, Ship s2) {
-                    int d1 = GeneticShip.getDistanceBetween(self, s1);
-                    int d2 = GeneticShip.getDistanceBetween(self, s2);
-                    return d1 - d2;
-                }
-            });
-            int moveCounter = 0;
-            while (moveCounter < this.getSpeed()) {
-                Coord location = this.getCoord();
-                Coord closest = allShips.get(0).getCoord();
-                int xDiff = closest.getX() - location.getX();
-                int yDiff = closest.getY() - location.getY();
-                Direction xDir = null;
-                Direction yDir = null;
-                if (xDiff > 0) {
-                    xDir = Direction.EAST;
-                } else if (xDiff < 0) {
-                    xDir = Direction.WEST;
-                }
-                if (yDiff > 0) {
-                    yDir = Direction.SOUTH;
-                } else if (yDiff < 0) {
-                    yDir = Direction.NORTH;
-                }
-                if (xDir != null) {
-                    this.move(arena, xDir);
-                    moveCounter++;
-                }
-                if (yDir != null) {
-                    this.move(arena, yDir);
-                    moveCounter++;
-                }
-                if (xDir == null && yDir == null) {
-                    break;
+            if (allShips.size() > 0) {
+                Collections.sort(allShips, new Comparator<Ship>() {
+                    public int compare(Ship s1, Ship s2) {
+                        int d1 = GeneticShip.getDistanceBetween(self, s1);
+                        int d2 = GeneticShip.getDistanceBetween(self, s2);
+                        return d1 - d2;
+                    }
+                });
+                int moveCounter = 0;
+                while (moveCounter < this.getSpeed()) {
+                    Coord location = this.getCoord();
+                    Coord closest = allShips.get(0).getCoord();
+                    int xDiff = closest.getX() - location.getX();
+                    int yDiff = closest.getY() - location.getY();
+                    Direction xDir = null;
+                    Direction yDir = null;
+                    if (xDiff > 0) {
+                        xDir = Direction.EAST;
+                    } else if (xDiff < 0) {
+                        xDir = Direction.WEST;
+                    }
+                    if (yDiff > 0) {
+                        yDir = Direction.SOUTH;
+                    } else if (yDiff < 0) {
+                        yDir = Direction.NORTH;
+                    }
+                    if (xDir != null) {
+                        this.move(arena, xDir);
+                        moveCounter++;
+                    }
+                    if (yDir != null) {
+                        this.move(arena, yDir);
+                        moveCounter++;
+                    }
+                    if (xDir == null && yDir == null) {
+                        break;
+                    }
                 }
             }
         }
