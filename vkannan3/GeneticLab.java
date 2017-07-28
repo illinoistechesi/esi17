@@ -5,21 +5,24 @@ import battleship.ships.*;
 import java.util.*;
 
 /*
- * $ javac esi17/vkannan3/GeneticTrial.java
- * $ java esi17.vkannan3.GeneticTrial 14
- * $ javac esi17/vkannan3/GeneticShip.java
- * $ java esi17.vkannan3.GeneticShip
+ * Genetic Lab
+ * @author Vinesh Kannan
+ * INSTRUCTIONS
+ * $ javac esi17/vkannan3/GeneticLab.java
+ * $ java esi17.vkannan3.GeneticLab
  */
-public class GeneticTrial {
+public class GeneticLab {
     
     private static final String INSTRUCTOR_TEAM = "Instructors";
     private static final String STUDENT_TEAM = "Students";
     private static Random RANDOM = new Random();
-    private static final int TRIALS = 5;
-    private static final int POPULATION_SIZE = 10;
-    private static final int GENERATIONS = 4;
-    private static final double GENE_MUTATION_RATE = 0.10;
-    private static final double PROPERTY_MUTATION_RATE = 0.05;
+    public static final int TRIALS = 5;
+    public static final int POPULATION_SIZE = 10;
+    public static final int GENERATIONS = 3;
+    public static final double GENE_MUTATION_RATE = 0.10;
+    public static final double PROPERTY_MUTATION_RATE = 0.05;
+    
+    private static Map<int[], Double> winRates = new HashMap<int[], Double>();
     
     public static void main(String[] args) {
         int simulationSeed = (int) Math.floor(Math.random() * 100);
@@ -29,7 +32,7 @@ public class GeneticTrial {
         setSeed(simulationSeed);
         System.out.println("Genetic Simulation Seed: " + simulationSeed);
         // Use Simulation Seed = 4
-        // $ java esi17.vkannan3.GeneticTrial 4
+        // $ java esi17.vkannan3.GeneticLab 4
         
         Helper.disableWrites();
         
@@ -37,9 +40,12 @@ public class GeneticTrial {
         Map<int[], Double> population = new HashMap<int[], Double>();
         for (int p = 0; p < POPULATION_SIZE; p++) {
             int[] chromosome = getRandomChromosome();
-            double fitness = getMeanFitness(chromosome);
+            List<Arena> trials = getTrials(chromosome);
+            double fitness = getMeanFitness(trials);
+            double winRate = getWinRate(trials);
             //System.out.println(p + ": " + Arrays.toString(chromosome) + " -> " + fitness);   
             population.put(chromosome, fitness);
+            winRates.put(chromosome, winRate);
         }
         
         for (int n = 0; n < GENERATIONS; n++) {
@@ -48,13 +54,33 @@ public class GeneticTrial {
         }
         
         System.out.println("Generation " + GENERATIONS);
+        List<int[]> solutions = new ArrayList<int[]>();
         for (Map.Entry<int[], Double> candidate : population.entrySet()) {
             int[] chromosome = candidate.getKey();
-            double fitness = candidate.getValue();
-            System.out.println(Arrays.toString(chromosome) + " -> " + fitness);   
+            solutions.add(chromosome);
         }
-        
-        
+        final Map<int[], Double> finalPopulation = population;
+        Collections.sort(solutions, new Comparator<int[]>() {
+            public int compare(int[] s1, int[] s2) {
+                double f1 = finalPopulation.get(s1);
+                double f2 = finalPopulation.get(s2);
+                double diff = f1 - f2;
+                int comparison = 0;
+                if (diff > 0) {
+                    comparison = -1;
+                } else if (diff < 0) {
+                    comparison = 1;
+                }
+                return comparison;
+            } 
+        });
+        int counter = 0;
+        for (int[] chromosome : solutions) {
+            counter++;
+            double fitness = finalPopulation.get(chromosome);
+            double winRate = winRates.get(chromosome);
+            System.out.println(counter + ": " + Arrays.toString(chromosome) + " -> " + fitness + "\t" + winRate);
+        }
     }
     
     public static Map<int[], Double> getNextPopulation(Map<int[], Double> population) {
@@ -72,14 +98,27 @@ public class GeneticTrial {
         for (int c = 0; c < halfSize; c++) {
             int[] child1 = crossover(parent1, fitness1, parent4, fitness4);
             child1 = mutate(child1);
-            double childFitness1 = getMeanFitness(child1);
+            List<Arena> trials1 = getTrials(child1);
+            double childFitness1 = getMeanFitness(trials1);
+            double winRate1 = getWinRate(trials1);
+            winRates.put(child1, winRate1);
             //System.out.println("Child " + c + ": " + Arrays.toString(child) + " -> " + childFitness);
             nextPopulation.put(child1, childFitness1);
             //
             int[] child2 = crossover(parent2, fitness2, parent3, fitness3);
             child2 = mutate(child2);
-            double childFitness2 = getMeanFitness(child2);
+            List<Arena> trials2 = getTrials(child2);
+            double childFitness2 = getMeanFitness(trials2);
+            double winRate2 = getWinRate(trials2);
+            winRates.put(child2, winRate2);
             nextPopulation.put(child2, childFitness2);
+        }
+        for (Map.Entry<int[], Double> candidate : population.entrySet()) {
+            int[] chromosome = candidate.getKey();
+            double fitness = candidate.getValue();
+            if (fitness > 0) {
+                //nextPopulation.put(chromosome, fitness);   
+            }
         }
         return nextPopulation;
     }
@@ -162,20 +201,39 @@ public class GeneticTrial {
         return null;
     }
     
-    public static double getMeanFitness(int[] chromosome) {
+    public static double getMeanFitness(List<Arena> trials) {
         double sum = 0;
-        double total = 0;
+        double total = trials.size();
+        for (Arena arena : trials) {
+            double fitness = getFitness(arena);
+            sum += fitness;
+        }
+        double mean = sum / total;
+        return mean;
+    }
+    
+    public static double getWinRate(List<Arena> trials) {
+        double wins = 0;
+        double total = trials.size();
+        for (Arena arena : trials) {
+            double ratio = getFinalScoreRatio(arena);
+            if (ratio > 1) {
+                wins++;
+            }
+        }
+        double rate = wins / total;
+        return rate;
+    }
+    
+    public static List<Arena> getTrials(int[] chromosome) {
+        List<Arena> trials = new ArrayList<Arena>();
         for (int i = 0; i < TRIALS; i++) {
             int seed = i;
             CustomBattle battle = runTrial(chromosome, seed);
             Arena arena = battle.getArena();
-            double fitness = getFitness(arena);
-            sum += fitness;
-            total++;
-            //System.out.println(Arrays.toString(chromosome) + " -> " + fitness);
+            trials.add(arena);
         }
-        double mean = sum / total;
-        return mean;
+        return trials;
     }
     
     public static double getFitness(Arena arena) {
@@ -198,6 +256,8 @@ public class GeneticTrial {
         }
         return fitness;
     }
+    
+    private static int zika = 0;
     
     public static double getFinalScoreRatio(Arena arena) {
         String instructorTeam = INSTRUCTOR_TEAM;
@@ -227,7 +287,10 @@ public class GeneticTrial {
             result = "Instructors win.";
         }
         double ratio = ifs / sfs;
-        //System.out.println(result + " -> " + ratio);
+        if (zika < 10) {
+            //System.out.println(result + " -> " + ratio);
+            zika++;
+        }
         return ratio;
     }
     
@@ -476,7 +539,7 @@ public class GeneticTrial {
     }
     
     public static Random getRandom() {
-        return GeneticTrial.RANDOM;
+        return GeneticLab.RANDOM;
     }
     
     public static void setSeed(int seed) {

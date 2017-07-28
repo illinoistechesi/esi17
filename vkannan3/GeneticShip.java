@@ -4,33 +4,39 @@ import battleship.games.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.PrintStream;
 
 /*
- * Vinesh
- * @author Your Name
+ * Genetic Ship
+ * @author Vinesh Kannan
+ * INSTRUCTIONS
+ * $ javac esi17/vkannan3/GeneticShip.java
+ * $ java esi17.vkannan3.GeneticShip
  */
 public class GeneticShip extends Ship {
     
     public static void main(String[] args) {
-        int seed = GeneticTrial.getRandom().nextInt(10);
+        int seed = GeneticLab.getRandom().nextInt(GeneticLab.TRIALS);
         if (args.length >= 1) {
             seed = Integer.parseInt(args[0]);
         }
         System.out.println("Battle Seed: " + seed);
-        int[] chromosome = {1, 3, 0, 6, 3, 0, 0, 1, 1};
-        CustomBattle battle = GeneticTrial.runTrial(chromosome, seed);
+        //int[] chromosome = {1, 3, 0, 6, 3, 0, 0, 1, 1};
+        //int[] chromosome = {3, 3, 1, 3, 0, 0, 3, 0, 0};
+        int[] chromosome = {2, 3, 1, 4, 4, 0, 2, 1, 0};
+        CustomBattle battle = GeneticLab.runTrial(chromosome, seed);
         Arena arena = battle.getArena();
-        GeneticShip geneticShip = GeneticTrial.getGeneticShip(arena);
+        GeneticShip geneticShip = GeneticLab.getGeneticShip(arena);
         System.out.println(geneticShip);
         System.out.println(geneticShip.getPhenotype());
-        int kills = GeneticTrial.getKillsByShip(arena, geneticShip);
+        int kills = GeneticLab.getKillsByShip(arena, geneticShip);
         int survived = geneticShip.getTurnsSurvived();
         int turns = arena.getTurn();
         System.out.println("Sunk " + kills + " ships.");
         System.out.println("Survived " + survived + "/" + turns + " turns.");
-        GeneticTrial.showBattleResults(battle);
+        GeneticLab.showBattleResults(battle);
     }
     
     private static int[] CHROMOSOME;
@@ -49,15 +55,6 @@ public class GeneticShip extends Ship {
     
     private static PrintStream out;
     
-    /*public GeneticShip() {
-        this.initializeName("Genetic Ship");
-        this.initializeOwner("Vinesh");
-        this.initializeHull(1);
-        this.initializeFirepower(1);
-        this.initializeSpeed(1);
-        this.initializeRange(1);
-    }*/
-    
     public GeneticShip() {
         GeneticShip.out = System.out;
         this.initializeName("Genetic Ship");
@@ -68,16 +65,6 @@ public class GeneticShip extends Ship {
         this.initializeRange(this.getGene(RANGE_GENE));
     }
     
-    /*public GeneticShip(int[] chromosome) {
-        this.setChromosome(chromosome);
-        this.initializeName("Genetic Ship");
-        this.initializeOwner("Vinesh");
-        this.initializeHull(this.getGene(HULL_GENE));
-        this.initializeFirepower(this.getGene(FIREPOWER_GENE));
-        this.initializeSpeed(this.getGene(SPEED_GENE));
-        this.initializeRange(this.getGene(RANGE_GENE));
-    }*/
-    
     /*
      * Determines what actions the ship will take on a given turn
      * @param arena (Arena) the battlefield for the match
@@ -87,9 +74,9 @@ public class GeneticShip extends Ship {
     public void doTurn(Arena arena) {
         System.setOut(GeneticShip.out);
         this.turnsSurvived++;
-        List<Ship> nearby = this.getNearbyShips(arena);
+        GeneticShip self = this;
+        List<Ship> nearby = this.getNearbyEnemies(arena);
         if (nearby.size() > 0) {
-            GeneticShip self = this;
             Collections.sort(nearby, new Comparator<Ship>() {
                 public int compare(Ship s1, Ship s2) {
                     int comparison = self.getComparison(s1, s2, PRIORITY_A_GENE, PRIORITY_A_SIGN_GENE);
@@ -101,10 +88,17 @@ public class GeneticShip extends Ship {
             });
             switch (this.getGene(FIRE_PATTERN_GENE)) {
                 case 0: // Eliminate
-                    Ship first = nearby.get(0);
-                    Coord coord = first.getCoord();
+                    int focusOn = 0;
                     for (int f = 0; f < this.getFirepower(); f++) {
+                        Ship target = nearby.get(focusOn);
+                        Coord coord = target.getCoord();
                         this.fire(arena, coord.getX(), coord.getY());
+                        if (target.isSunk()) {
+                            focusOn++;
+                            if (focusOn >= nearby.size()) {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 1:  // Spread
@@ -120,7 +114,66 @@ public class GeneticShip extends Ship {
                 default:
                     break;
             }
+        } else {
+            List<Ship> allShips = this.getAllEnemies(arena);
+            Collections.sort(allShips, new Comparator<Ship>() {
+                public int compare(Ship s1, Ship s2) {
+                    int d1 = GeneticShip.getDistanceBetween(self, s1);
+                    int d2 = GeneticShip.getDistanceBetween(self, s2);
+                    return d1 - d2;
+                }
+            });
+            int moveCounter = 0;
+            while (moveCounter < this.getSpeed()) {
+                Coord location = this.getCoord();
+                Coord closest = allShips.get(0).getCoord();
+                int xDiff = closest.getX() - location.getX();
+                int yDiff = closest.getY() - location.getY();
+                Direction xDir = null;
+                Direction yDir = null;
+                if (xDiff > 0) {
+                    xDir = Direction.EAST;
+                } else if (xDiff < 0) {
+                    xDir = Direction.WEST;
+                }
+                if (yDiff > 0) {
+                    yDir = Direction.SOUTH;
+                } else if (yDiff < 0) {
+                    yDir = Direction.NORTH;
+                }
+                if (xDir != null) {
+                    this.move(arena, xDir);
+                    moveCounter++;
+                }
+                if (yDir != null) {
+                    this.move(arena, yDir);
+                    moveCounter++;
+                }
+                if (xDir == null && yDir == null) {
+                    break;
+                }
+            }
         }
+    }
+    
+    public List<Ship> getNearbyEnemies(Arena arena) {
+        List<Ship> res = new ArrayList<Ship>();
+        for (Ship ship : this.getNearbyShips(arena)) {
+            if (!this.isSameTeamAs(ship)) {
+                res.add(ship);
+            }
+        }
+        return res;
+    }
+    
+    public List<Ship> getAllEnemies(Arena arena) {
+        List<Ship> res = new ArrayList<Ship>();
+        for (Ship ship : arena.getAllShips()) {
+            if (!this.isSameTeamAs(ship)) {
+                res.add(ship);
+            }
+        }
+        return res;
     }
     
     public int getComparison(Ship s1, Ship s2, int propertyIndex, int signIndex) {
