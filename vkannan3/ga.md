@@ -4,6 +4,7 @@
 
 ```
 [0][1][2][3][4][5][6][7][8]
+```
 
 | i | Gene              | Range | Options |
 |---|-------------------|-------|---------|
@@ -16,4 +17,3 @@
 | 6 | Priority B        | 0 - 4 | {Distance, Health, Firepower, Speed, Range} |
 | 7 | Priority B Sign   | 0 - 1 | {-1, +1} |
 | 8 | Fire Pattern      | 0 - 1 | {Eliminate, Spread} |
-```
