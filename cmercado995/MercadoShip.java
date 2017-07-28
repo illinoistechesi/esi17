@@ -9,13 +9,13 @@ import java.util.List;
  * @date 7/24/2017
 *******************************************************/
 public class MercadoShip extends Ship {
-    
-    public MercadoShip() {
+  
+	public MercadoShip() {
         this.initializeName("Mercado Ship");
         this.initializeOwner("Christian Mercado");
-        this.initializeHull(4);
+        this.initializeHull(3);
         this.initializeFirepower(3);
-        this.initializeSpeed(0);
+        this.initializeSpeed(1);
         this.initializeRange(3);
     }
     /*
@@ -24,6 +24,21 @@ public class MercadoShip extends Ship {
      * @return void
      */
     @Override
+    /*
+    for(Ships ship : getAllEnemies){
+        public boolean inEnemyRange(Ship self, Ship target) {
+        	for(Ships ship : getAllEnemies){
+        		Coord st = self.getCoord();
+            	Coord ct = target.getCoord();
+            	int range = self.getRange();
+            	int[] tXRange = {ct.getX() - target.getRange(), ct.getX() + target.getRange()};
+            	int[] tYRange = {ct.getY() - target.getRange(), ct.getY() + target.getRange()};
+            	boolean inXRange = st.getX() >= tXRange[0] && st.getX() <= tXRange[1];
+            	boolean inYRange = st.getY() >= tYRange[0] && st.getY() <= tYRange[1];
+            	return inXRange && inYRange;
+        }
+    }
+    }*/
     public void doTurn(Arena arena){
         // List of Nearby Ships
         List<Ship> nearby = this.getNearbyShips(arena);
@@ -59,26 +74,6 @@ public class MercadoShip extends Ship {
                 this.fire(arena, enemyX, enemyY);
                 if(this.getRemainingShots() == 0) break;
             }
-            
-            // Literally copy-pasted to get around "getNearbyShips" being protected lol
-            /*** Academic Dishonesty ***/
-            /****** Declaration of a function ***************/
-            /*
-            for(Ships ship : getAllEnemies){
-                public boolean inEnemyRange(Ship self, Ship target) {
-                    Coord st = self.getCoord();
-                    Coord ct = target.getCoord();
-                    int range = self.getRange();
-                    int[] tXRange = {ct.getX() - target.getRange, ct.getX() + target.getRange};
-                    int[] tYRange = {ct.getY() - target.getRange, ct.getY() + target.getRange};
-                    boolean inXRange = st.getX() >= tXRange[0] && st.getX() <= tXRange[1];
-                    boolean inYRange = st.getY() >= tYRange[0] && st.getY() <= tYRange[1];
-                    return inXRange && inYRange;
-                }
-            }
-            // What to do if I can be targeted
-            this.inEnemyRange;
-            */
         }
     }
 }
