@@ -429,8 +429,12 @@ public class DavyJonesLocker extends Ship {
                     if (minThreatTarget == null) {
                     } else {
                         for (int f = minThreatTarget.getHealth(); f > 0; f--) {
-                            this.fire(arena, minThreatTarget.getCoord().getX(), minThreatTarget.getCoord().getY());
-                            if (this.getRemainingShots() == 0) {
+                            if (arena.isInRange(this, minThreatTarget)) {
+                                this.fire(arena, minThreatTarget.getCoord().getX(), minThreatTarget.getCoord().getY());
+                                if (this.getRemainingShots() == 0) {
+                                    break;
+                                }
+                            } else {
                                 break;
                             }
                         }
@@ -467,8 +471,12 @@ public class DavyJonesLocker extends Ship {
                     
                     if (useFire) {
                         for (int f = minThreatTarget.getHealth(); f > 0; f--) {
-                            this.fire(arena, minThreatTarget.getCoord().getX(), minThreatTarget.getCoord().getY());
-                            if (this.getRemainingShots() == 0) {
+                            if (arena.isInRange(this, minThreatTarget)) {
+                                this.fire(arena, minThreatTarget.getCoord().getX(), minThreatTarget.getCoord().getY());
+                                if (this.getRemainingShots() == 0) {
+                                    break;
+                                }
+                            } else {
                                 break;
                             }
                         }                    
