@@ -38,13 +38,13 @@ public class RandomShip extends Ship {
     //System.out.println("The Random Number This Time Is: "+rand2);
     //System.out.println("The Random Number for the correct one This Time Is: "+rand2);
     switch(rand2){
-        case 0: arena.move(this, Direction.NORTH);
+        case 0: this.move(arena, Direction.NORTH);
                 break;
-        case 1: arena.move(this, Direction.SOUTH);
+        case 1: this.move(arena, Direction.SOUTH);
                 break;        
-        case 2: arena.move(this, Direction.EAST);
+        case 2: this.move(arena, Direction.EAST);
                 break;
-        case 3: arena.move(this, Direction.WEST);
+        case 3: this.move(arena, Direction.WEST);
                 break;    
     }
     
