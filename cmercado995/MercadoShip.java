@@ -1,5 +1,8 @@
 package esi17.cmercado995;
 import battleship.core.*;
+import battleship.ships.QueenShip;
+
+import java.util.ArrayList;
 import java.util.List;
 /******************************************************
  * This ship includes a lot of academic dishonesty, 
@@ -9,13 +12,13 @@ import java.util.List;
  * @date 7/24/2017
 *******************************************************/
 public class MercadoShip extends Ship {
-    
-    public MercadoShip() {
+  
+	public MercadoShip() {
         this.initializeName("Mercado Ship");
         this.initializeOwner("Christian Mercado");
-        this.initializeHull(4);
+        this.initializeHull(3);
         this.initializeFirepower(3);
-        this.initializeSpeed(0);
+        this.initializeSpeed(1);
         this.initializeRange(3);
     }
     /*
@@ -23,6 +26,7 @@ public class MercadoShip extends Ship {
      * @param arena (Arena) the battlefield for the match
      * @return void
      */
+
     @Override
     public void doTurn(Arena arena){
         // List of Nearby Ships
@@ -60,25 +64,35 @@ public class MercadoShip extends Ship {
                 if(this.getRemainingShots() == 0) break;
             }
             
-            // Literally copy-pasted to get around "getNearbyShips" being protected lol
-            /*** Academic Dishonesty ***/
-            /****** Declaration of a function ***************/
-            /*
-            for(Ships ship : getAllEnemies){
-                public boolean inEnemyRange(Ship self, Ship target) {
-                    Coord st = self.getCoord();
-                    Coord ct = target.getCoord();
-                    int range = self.getRange();
-                    int[] tXRange = {ct.getX() - target.getRange, ct.getX() + target.getRange};
-                    int[] tYRange = {ct.getY() - target.getRange, ct.getY() + target.getRange};
-                    boolean inXRange = st.getX() >= tXRange[0] && st.getX() <= tXRange[1];
-                    boolean inYRange = st.getY() >= tYRange[0] && st.getY() <= tYRange[1];
-                    return inXRange && inYRange;
-                }
-            }
-            // What to do if I can be targeted
-            this.inEnemyRange;
-            */
+            // If in an enemy's range, move out of the range
+            // I apologize if there are too many duplicate variables, I don't understand java yet
+            boolean inEnemyRange = arena.isInRange(ship, this);
+            if(inEnemyRange){
+            	Coord enemyCoord = ship.getCoord();
+            	Coord myCoord = this.getCoord();
+            	int EnemyRange = ship.getRange();
+            	if(myCoord.getX() > enemyCoord.getX() + EnemyRange){
+            		this.move(arena, Direction.SOUTH);
+            	}else if(myCoord.getX() < enemyCoord.getX() + EnemyRange){
+            		this.move(arena, Direction.NORTH);
+            	}else if(myCoord.getY() > enemyCoord.getY() + EnemyRange){
+            		this.move(arena, Direction.EAST);
+            	}else if(myCoord.getY() < enemyCoord.getY() + EnemyRange){
+            		this.move(arena, Direction.WEST);
+            	}else if(this.getRemainingMoves() == 0) break;
+            	}else {
+            		System.out.println("What now?");
+            	}
         }
-    }
+ }
+    public boolean isInRange(Ship self, Ship target) {
+		Coord st = self.getCoord();
+		Coord ct = target.getCoord();
+		int range = self.getRange();
+		int[] sXRange = {st.getX() - range, st.getX() + range};
+		int[] sYRange = {st.getY() - range, st.getY() + range};
+		boolean inXRange = ct.getX() >= sXRange[0] && ct.getX() <= sXRange[1];
+		boolean inYRange = ct.getY() >= sYRange[0] && ct.getY() <= sYRange[1];
+		return inXRange && inYRange;
+	}
 }
